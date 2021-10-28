@@ -30,12 +30,12 @@ export class CreateUserDto {
 
   @IsString()
   @IsNotEmpty({ message: 'Informe uma senha' })
-  @MinLength(6, { message: 'A senha deve ter no mínimo 6 carcateres' })
+  @MinLength(8, { message: 'A senha deve ter no mínimo 8 carcateres' })
   password: string;
 
   // @IsNotEmpty({ message: 'Informe a confirmação de senha' })
-  // @MinLength(6, {
-  //   message: 'A confirmação de senha deve ter no mínimo 6 carcateres',
+  // @MinLength(8, {
+  //   message: 'A confirmação de senha deve ter no mínimo 8 carcateres',
   // })
   // passwordConfirmation: string;
 }

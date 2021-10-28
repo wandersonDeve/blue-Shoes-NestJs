@@ -40,6 +40,10 @@ model Produto {
   id Int @id @default(autoincrement())
   name String
   price Float
+  quantidade Int
+  color String
+  size Int
+  descricao String
   category Category[]
   shoppingCart    ShoppingCart?  @relation(fields: [shoppingCartId], references: [id])
   shoppingCartId  Int?

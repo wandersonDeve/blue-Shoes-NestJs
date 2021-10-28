@@ -6,6 +6,7 @@ import {
   MaxLength,
   IsNotEmpty,
   MinLength,
+  IsPostalCode,
 } from 'class-validator';
 
 export class CreateUserDto {
@@ -18,7 +19,17 @@ export class CreateUserDto {
   @MaxLength(200, {
     message: 'O nome deve ter menos de 200 carcateres',
   })
-  displayName: string;
+  name: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'Infome o CPF' })
+  @MinLength(11, { message: 'O CPF é composto por 11 numeros' })
+  @MaxLength(11, { message: 'O CPF é composto por 11 numeros' })
+  cpf: string;
+
+  @IsPostalCode('BR')
+  @IsNotEmpty({ message: 'Informar o CEP' })
+  cep: string;
 
   @IsString()
   @IsNotEmpty({ message: 'Informe um endereço de email' })

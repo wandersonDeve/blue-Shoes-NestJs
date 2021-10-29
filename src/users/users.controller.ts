@@ -9,10 +9,12 @@ import {
   UsePipes,
   ValidationPipe,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from '.prisma/client';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('user')
 export class UsersController {
@@ -30,12 +32,14 @@ export class UsersController {
   //     return this.user.findAll();
   //   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('/single/:id')
   @UsePipes(ValidationPipe)
   async findUnique(@Param('id', ParseIntPipe) id: number) {
     return this.user.findOne(id);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Put('/update/:id')
   @UsePipes(ValidationPipe)
   async update(
@@ -45,6 +49,7 @@ export class UsersController {
     return this.user.update(id, updateUser);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Delete('/delete/:id')
   @UsePipes(ValidationPipe)
   async delete(@Param('id') id: string) {

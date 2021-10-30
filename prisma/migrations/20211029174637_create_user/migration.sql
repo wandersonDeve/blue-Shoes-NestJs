@@ -2,11 +2,13 @@
 CREATE TABLE `User` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `created` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `displayName` VARCHAR(191) NOT NULL,
+    `name` VARCHAR(191) NOT NULL,
+    `cpf` VARCHAR(191) NOT NULL,
+    `cep` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
     `password` VARCHAR(191) NOT NULL,
 
-    UNIQUE INDEX `User_displayName_key`(`displayName`),
+    UNIQUE INDEX `User_cpf_key`(`cpf`),
     UNIQUE INDEX `User_email_key`(`email`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -32,6 +34,10 @@ CREATE TABLE `Produto` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
     `price` DOUBLE NOT NULL,
+    `quantidade` INTEGER NOT NULL,
+    `color` VARCHAR(191) NOT NULL,
+    `size` INTEGER NOT NULL,
+    `descricao` VARCHAR(191) NOT NULL,
     `shoppingCartId` INTEGER NULL,
     `wishlisttId` INTEGER NULL,
 

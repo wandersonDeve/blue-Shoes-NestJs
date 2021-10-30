@@ -9,7 +9,7 @@ import AuthUser from '../common/auth-user.decorator';
 export class AuthController {
   constructor(private service: AuthService) {}
 
-  @Post('/login')
+  @Post('login')
   login(@Body() data: LoginDto): Promise<AuthResponse> {
     return this.service.login(data);
   }

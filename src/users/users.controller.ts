@@ -52,7 +52,7 @@ export class UsersController {
   @UseGuards(AuthGuard('jwt'))
   @Delete('/delete/:id')
   @UsePipes(ValidationPipe)
-  async delete(@Param('id') id: string) {
-    return this.user.deleteOne({ id: Number(id) });
+  async delete(@Param('id') id: number) {
+    return this.user.deleteOne(id);
   }
 }

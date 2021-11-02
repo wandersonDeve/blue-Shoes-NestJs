@@ -6,6 +6,7 @@ import {
   MaxLength,
   IsNotEmpty,
   MinLength,
+  IsPostalCode,
 } from 'class-validator';
 
 export class CreateUserDto {
@@ -18,7 +19,17 @@ export class CreateUserDto {
   @MaxLength(200, {
     message: 'O nome deve ter menos de 200 carcateres',
   })
-  displayName: string;
+  name: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'Infome o CPF' })
+  @MinLength(11, { message: 'O CPF é composto por 11 numeros' })
+  @MaxLength(11, { message: 'O CPF é composto por 11 numeros' })
+  cpf: string;
+
+  @IsPostalCode('BR')
+  @IsNotEmpty({ message: 'Informar o CEP' })
+  cep: string;
 
   @IsString()
   @IsNotEmpty({ message: 'Informe um endereço de email' })
@@ -30,12 +41,12 @@ export class CreateUserDto {
 
   @IsString()
   @IsNotEmpty({ message: 'Informe uma senha' })
-  @MinLength(6, { message: 'A senha deve ter no mínimo 6 carcateres' })
+  @MinLength(8, { message: 'A senha deve ter no mínimo 8 carcateres' })
   password: string;
 
-  @IsNotEmpty({ message: 'Informe a confirmação de senha' })
-  @MinLength(6, {
-    message: 'A confirmação de senha deve ter no mínimo 6 carcateres',
-  })
-  passwordConfirmation: string;
+  // @IsNotEmpty({ message: 'Informe a confirmação de senha' })
+  // @MinLength(8, {
+  //   message: 'A confirmação de senha deve ter no mínimo 8 carcateres',
+  // })
+  // passwordConfirmation: string;
 }

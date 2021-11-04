@@ -7,6 +7,7 @@ import {
   IsNotEmpty,
   MinLength,
   IsPostalCode,
+  IsArray,
 } from 'class-validator';
 
 export class CreateUserDto {

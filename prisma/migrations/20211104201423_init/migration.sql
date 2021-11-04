@@ -30,16 +30,27 @@ CREATE TABLE `Wishlist` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Produto` (
+CREATE TABLE `Product` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
+    `image` VARCHAR(191) NOT NULL,
+    `logo` VARCHAR(191) NOT NULL,
     `price` DOUBLE NOT NULL,
-    `quantidade` INTEGER NOT NULL,
-    `color` VARCHAR(191) NOT NULL,
-    `size` INTEGER NOT NULL,
-    `descricao` VARCHAR(191) NOT NULL,
+    `description` VARCHAR(191) NOT NULL,
     `shoppingCartId` INTEGER NULL,
     `wishlisttId` INTEGER NULL,
+
+    UNIQUE INDEX `Product_name_key`(`name`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Storage` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `size` INTEGER NOT NULL,
+    `color` VARCHAR(191) NOT NULL,
+    `quantity` INTEGER NOT NULL,
+    `productId` INTEGER NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -53,12 +64,12 @@ CREATE TABLE `Category` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `_CategoryToProduto` (
+CREATE TABLE `_CategoryToProduct` (
     `A` INTEGER NOT NULL,
     `B` INTEGER NOT NULL,
 
-    UNIQUE INDEX `_CategoryToProduto_AB_unique`(`A`, `B`),
-    INDEX `_CategoryToProduto_B_index`(`B`)
+    UNIQUE INDEX `_CategoryToProduct_AB_unique`(`A`, `B`),
+    INDEX `_CategoryToProduct_B_index`(`B`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
@@ -68,13 +79,16 @@ ALTER TABLE `ShoppingCart` ADD CONSTRAINT `ShoppingCart_userId_fkey` FOREIGN KEY
 ALTER TABLE `Wishlist` ADD CONSTRAINT `Wishlist_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Produto` ADD CONSTRAINT `Produto_shoppingCartId_fkey` FOREIGN KEY (`shoppingCartId`) REFERENCES `ShoppingCart`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `Product` ADD CONSTRAINT `Product_shoppingCartId_fkey` FOREIGN KEY (`shoppingCartId`) REFERENCES `ShoppingCart`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Produto` ADD CONSTRAINT `Produto_wishlisttId_fkey` FOREIGN KEY (`wishlisttId`) REFERENCES `Wishlist`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `Product` ADD CONSTRAINT `Product_wishlisttId_fkey` FOREIGN KEY (`wishlisttId`) REFERENCES `Wishlist`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `_CategoryToProduto` ADD FOREIGN KEY (`A`) REFERENCES `Category`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Storage` ADD CONSTRAINT `Storage_productId_fkey` FOREIGN KEY (`productId`) REFERENCES `Product`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `_CategoryToProduto` ADD FOREIGN KEY (`B`) REFERENCES `Produto`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `_CategoryToProduct` ADD FOREIGN KEY (`A`) REFERENCES `Category`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `_CategoryToProduct` ADD FOREIGN KEY (`B`) REFERENCES `Product`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

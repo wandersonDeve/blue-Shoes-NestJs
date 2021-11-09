@@ -63,8 +63,8 @@ model Usuario {
   id        Int      @id @default(autoincrement())
   nome      String
   sobrenome String
-  email     String
-  cpf       String
+  email     String @unique
+  cpf       String @unique
   senha     String
   pedido    Pedido[]
 }

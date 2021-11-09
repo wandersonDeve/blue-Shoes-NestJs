@@ -7,9 +7,11 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { Usuario } from '@prisma/client';
 import { CriarUsuarioDto } from './dto/criar-usuario.dto';
 import { UsuariosService } from './usuarios.service';
@@ -24,22 +26,27 @@ export class UsuariosController {
     return this.usuariosService.criar(usuarioDto);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @UsePipes(ValidationPipe)
   encontraUm(@Param('id', ParseIntPipe) id: number): Promise<Usuario> {
     return this.usuariosService.encontraUm(id);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Put('/atualizar/:id')
   @UsePipes(ValidationPipe)
-  atualizarUsuario(@Body() usuarioDto: CriarUsuarioDto, @Param('id', ParseIntPipe) id: number): Promise<Usuario>{
-    return this.usuariosService.atualizarUsuario(id,usuarioDto)
+  atualizarUsuario(
+    @Body() usuarioDto: CriarUsuarioDto,
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<Usuario> {
+    return this.usuariosService.atualizarUsuario(id, usuarioDto);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Delete('deletar/:id')
   @UsePipes(ValidationPipe)
   deletaum(@Param('id', ParseIntPipe) id: number): Promise<Usuario> {
     return this.usuariosService.deletarUsuario(id);
   }
-  
 }

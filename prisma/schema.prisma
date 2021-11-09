@@ -55,16 +55,8 @@ model Pedido {
   Boleto           String
   carrinho         Carrinho? @relation(fields: [carrinhoId], references: [id])
   carrinhoId       Int?      @unique
-  status           Status?   @relation(fields: [statusId], references: [id])
-  statusId         Int?      @unique
   Usuario          Usuario?  @relation(fields: [usuarioId], references: [id])
   usuarioId        Int?
-}
-
-model Status {
-  id     Int     @id @default(autoincrement())
-  nome   Int
-  pedido Pedido?
 }
 
 model Usuario {
@@ -72,6 +64,7 @@ model Usuario {
   nome      String
   sobrenome String
   email     String
+  cpf       String
   senha     String
   pedido    Pedido[]
 }

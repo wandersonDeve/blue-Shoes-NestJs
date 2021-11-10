@@ -12,7 +12,7 @@ datasource db {
 
 model Categorias {
   id      Int       @id @default(autoincrement())
-  nome    String
+  nome    String 
   produto Produto[]
 }
 

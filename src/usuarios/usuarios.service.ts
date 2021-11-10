@@ -7,17 +7,15 @@ import {
 import { PrismaService } from 'src/prisma.service';
 import { CriarUsuarioDto } from './dto/criar-usuario.dto';
 import * as bcrypt from 'bcrypt';
-import { Usuario } from '.prisma/client';
+import { Prisma, Usuario } from '@prisma/client';
 
 @Injectable()
 export class UsuariosService {
   constructor(private db: PrismaService) {}
 
-  async criar(data: CriarUsuarioDto): Promise<Usuario> {
-    const buscaEmail = await this.db.usuario.findFirst({
-      where: {
-        email: data.email,
-      },
+  async criar(data: Prisma.UsuarioCreateInput): Promise<Usuario> {
+    const userExists = await this.db.usuario.findUnique({
+      where: { email: data.email },
     });
 
     const buscaCpf = await this.db.usuario.findFirst({
@@ -26,11 +24,17 @@ export class UsuariosService {
       },
     });
 
-    if (buscaEmail != null || buscaCpf != null) {
-      throw new BadRequestException('email ou Cpf já Cadastrado');
+    if (userExists) {
+      throw new ConflictException('Email já está cadastrado');
     }
 
-    const hashSenha = await bcrypt.hash(data.senha, 10);
+    if (buscaCpf) {
+      throw new BadRequestException('Cpf já Cadastrado');
+    }
+
+    
+    const salt = 10;
+    const hashSenha = await bcrypt.hash(data.senha, salt);
 
     const novoUsuario = await this.db.usuario.create({
       data: {
@@ -39,6 +43,7 @@ export class UsuariosService {
       },
     });
 
+    delete novoUsuario.senha
     return novoUsuario;
   }
 
@@ -65,10 +70,7 @@ export class UsuariosService {
     return usuarioEncontrado;
   }
 
-  async atualizarUsuario(
-    usuariId: number,
-    data: CriarUsuarioDto,
-  ): Promise<Usuario> {
+  async atualizarUsuario(usuariId: number, data: Prisma.UsuarioUpdateInput,): Promise<Usuario> {
     const usuarioEncontrado = await this.db.usuario.findUnique({
       where: {
         id: usuariId,

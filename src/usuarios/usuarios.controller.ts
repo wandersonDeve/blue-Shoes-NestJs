@@ -13,6 +13,7 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Usuario } from '@prisma/client';
+import { AtualizarUsuarioDto } from './dto/atualizar-usuario.dto';
 import { CriarUsuarioDto } from './dto/criar-usuario.dto';
 import { UsuariosService } from './usuarios.service';
 
@@ -21,9 +22,8 @@ export class UsuariosController {
   constructor(private readonly usuariosService: UsuariosService) {}
 
   @Post('criar')
-  @UsePipes(ValidationPipe)
-  criar(@Body() usuarioDto: CriarUsuarioDto): Promise<Usuario> {
-    return this.usuariosService.criar(usuarioDto);
+  createUser(@Body() data: CriarUsuarioDto): Promise<Usuario> {
+    return this.usuariosService.criar(data);
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -37,7 +37,7 @@ export class UsuariosController {
   @Put('/atualizar/:id')
   @UsePipes(ValidationPipe)
   atualizarUsuario(
-    @Body() usuarioDto: CriarUsuarioDto,
+    @Body() usuarioDto: AtualizarUsuarioDto,
     @Param('id', ParseIntPipe) id: number,
   ): Promise<Usuario> {
     return this.usuariosService.atualizarUsuario(id, usuarioDto);

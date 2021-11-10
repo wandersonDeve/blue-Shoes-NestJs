@@ -7,15 +7,17 @@ import {
   MaxLength,
 } from 'class-validator';
 
-export class CriarProdutoDto {
+export class AtualizarProdutoDto {
   @IsString()
   @Length(2, 40)
   @MaxLength(188)
+  @IsOptional()
   nome: string;
 
   @IsString()
   @Length(2, 188)
   @MaxLength(188)
+  @IsOptional()
   descricao: string;
 
   @IsOptional()
@@ -24,6 +26,7 @@ export class CriarProdutoDto {
   @IsString()
   @Length(2, 188)
   @MaxLength(188)
+  @IsOptional()
   imagem: string;
 
   @IsOptional()
@@ -32,11 +35,13 @@ export class CriarProdutoDto {
   @IsString()
   @Length(2, 40)
   @MaxLength(188)
+  @IsOptional()
   logo: string;
 
   @IsString()
   @Length(2, 40)
   @MaxLength(188)
+  @IsOptional()
   marca: string;
 
   @IsOptional()

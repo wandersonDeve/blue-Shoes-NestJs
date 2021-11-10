@@ -61,6 +61,7 @@ export class UsuariosService {
       throw new NotFoundException('Usuario Não Encontrado');
     }
 
+    delete usuarioEncontrado.senha
     return usuarioEncontrado;
   }
 

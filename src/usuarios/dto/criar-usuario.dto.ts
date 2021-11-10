@@ -6,8 +6,6 @@ import {
   IsOptional,
   MaxLength,
   IsNotEmpty,
-  MinLength,
-  IsPostalCode,
   Matches,
 } from 'class-validator';
 import { Cpf } from 'src/common/customCpf';
@@ -36,6 +34,7 @@ export class CriarUsuarioDto {
   @IsNotEmpty({ message: 'Infome o CPF' })
   cpf: string;
 
+  @Length(8, 20)
   @IsOptional()
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
     message: 'password too weak',

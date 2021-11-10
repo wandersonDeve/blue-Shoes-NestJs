@@ -23,8 +23,9 @@ model Produto {
   Categorias        Categorias? @relation(fields: [categoriasId], references: [id])
   categoriasId      Int?
   imagem            String
-  quantidade_vendas Int
+  quantidade_vendas Int?
   logo              String
+  marca             String
   storage           Storage[]
   Carrinho          Carrinho?   @relation(fields: [carrinhoId], references: [id])
   carrinhoId        Int?
@@ -63,8 +64,8 @@ model Usuario {
   id        Int      @id @default(autoincrement())
   nome      String
   sobrenome String
-  email     String @unique
-  cpf       String @unique
+  email     String   @unique
+  cpf       String   @unique
   senha     String
   pedido    Pedido[]
 }

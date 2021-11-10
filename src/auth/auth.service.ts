@@ -4,7 +4,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { AuthResponse, LoginDto } from './dto/auth.dto';
 import * as bcrypt from 'bcrypt';
 
@@ -13,27 +13,25 @@ export class AuthService {
   constructor(private db: PrismaService, private jwt: JwtService) {}
 
   async login(data: LoginDto): Promise<AuthResponse> {
-    const { email, senha } = data;
+    const { email, password } = data;
 
-    const usuario = await this.db.usuario.findUnique({
+    const user = await this.db.user.findUnique({
       where: { email },
     });
 
-    if (!usuario) {
+    if (!user) {
       throw new NotFoundException();
     }
 
-    const passwordValid = await bcrypt.compare(senha, usuario.senha);
+    const passwordValid = await bcrypt.compare(password, user.password);
 
     if (!passwordValid) {
       throw new UnauthorizedException('invalid_credentials');
     }
 
-    delete usuario.senha
-
     return {
       token: this.jwt.sign({ email }),
-      usuario,
+      user,
     };
   }
 }

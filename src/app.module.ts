@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UsuariosModule } from './usuarios/usuarios.module';
+import { UsersModule } from './users/users.module';
+import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
-import { ProdutoModule } from './produto/produto.module';
+import { ProductsModule } from './products/products.module';
 
 @Module({
-  imports: [UsuariosModule, AuthModule,ProdutoModule],
+  imports: [UsersModule, PrismaModule, AuthModule, ProductsModule],
   controllers: [AppController],
   providers: [AppService],
 })

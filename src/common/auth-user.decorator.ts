@@ -1,10 +1,10 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { Usuario } from '.prisma/client';
+import { User } from '.prisma/client';
 
 const AuthUser = createParamDecorator((ctx: ExecutionContext) => {
   const request = ctx.switchToHttp().getRequest();
-  const user = request.user as Usuario;
-  delete user.senha;
+  const user = request.user as User;
+  delete user.password;
   return user;
 });
 

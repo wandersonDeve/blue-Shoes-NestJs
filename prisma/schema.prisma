@@ -10,58 +10,62 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id Int @id @default(autoincrement())
-  created DateTime @default(now())
-  name String
-  cpf String @unique
-  cep String
-  email String @unique
-  password String
-  wishlist Wishlist[]
-  shoppingCart ShoppingCart[]
+model Categorias {
+  id      Int       @id @default(autoincrement())
+  nome    String
+  produto Produto[]
 }
 
-model ShoppingCart {
-  id Int @id @default(autoincrement())
-  product Product[]
-  User    User?  @relation(fields: [userId], references: [id])
-  userId  Int?
-}
-
-model Wishlist {
-  id Int @id @default(autoincrement())
-  product Product[]
-  User    User?  @relation(fields: [userId], references: [id])
-  userId  Int?
-}
-
-model Product {
-  id Int @id @default(autoincrement())
-  name String @unique
-  image String
-  logo String
-  price Float
-  storage Storage[]
-  description String
-  category Category[]
-  shoppingCart    ShoppingCart?  @relation(fields: [shoppingCartId], references: [id])
-  shoppingCartId  Int?
-  wishlist    Wishlist?  @relation(fields: [wishlisttId], references: [id])
-  wishlisttId  Int?
+model Produto {
+  id                Int         @id @default(autoincrement())
+  nome              String
+  descricao         String
+  Categorias        Categorias? @relation(fields: [categoriasId], references: [id])
+  categoriasId      Int?
+  imagem            String
+  quantidade_vendas Int?
+  logo              String
+  marca             String
+  storage           Storage[]
+  Carrinho          Carrinho?   @relation(fields: [carrinhoId], references: [id])
+  carrinhoId        Int?
 }
 
 model Storage {
-  id Int @id @default(autoincrement())
-  size Int
-  color String
-  quantity Int
-  product    Product?  @relation(fields: [productId], references: [id])
-  productId  Int?
+  id         Int      @id @default(autoincrement())
+  cor        String
+  tamanho    Int
+  quantidade Int
+  Produto    Produto? @relation(fields: [produtoId], references: [id])
+  produtoId  Int?
 }
 
-model Category {
-  id Int @id @default(autoincrement())
-  name String
-  product Product[]
+model Carrinho {
+  id          Int       @id @default(autoincrement())
+  produto     Produto[]
+  quantidade  Int
+  valor_total Float
+  pedido      Pedido?
+}
+
+model Pedido {
+  id               Int       @id @default(autoincrement())
+  valor            Decimal
+  cep              String
+  endereco_entrega String
+  Boleto           String
+  carrinho         Carrinho? @relation(fields: [carrinhoId], references: [id])
+  carrinhoId       Int?      @unique
+  Usuario          Usuario?  @relation(fields: [usuarioId], references: [id])
+  usuarioId        Int?
+}
+
+model Usuario {
+  id        Int      @id @default(autoincrement())
+  nome      String
+  sobrenome String
+  email     String   @unique
+  cpf       String   @unique
+  senha     String
+  pedido    Pedido[]
 }

@@ -12,7 +12,7 @@ datasource db {
 
 model Categorias {
   id      Int       @id @default(autoincrement())
-  nome    String 
+  nome    String
   produto Produto[]
 }
 
@@ -26,6 +26,7 @@ model Produto {
   quantidade_vendas Int?
   logo              String
   marca             String
+  preco             Int
   storage           Storage[]
   Carrinho          Carrinho?   @relation(fields: [carrinhoId], references: [id])
   carrinhoId        Int?

@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma, Produto } from '@prisma/client';
+import { zip } from 'rxjs';
 import { PrismaService } from 'src/prisma.service';
 import { CriarProdutoDto } from './dto/criar-produtos.dto';
 
@@ -111,6 +112,24 @@ export class ProdutoService {
   }
 
   async todosProdutos(): Promise<Produto[]>{
-    return this.db.produto.findMany()
+    const todosProd = await this.db.produto.findMany()
+
+
+   for(let index in todosProd){
+
+    if(!todosProd[index].carrinhoId){
+      delete todosProd[index].carrinhoId
+    }
+
+    if(!todosProd[index].categoriasId){
+      delete todosProd[index].categoriasId
+    }
+
+    if(!todosProd[index].quantidade_vendas){
+      delete todosProd[index].quantidade_vendas
+    }
+   }
+
+    return todosProd
   }
 }

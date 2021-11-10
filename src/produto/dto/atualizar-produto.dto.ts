@@ -1,6 +1,7 @@
 import { Storage } from '@prisma/client';
 import {
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
   Length,
@@ -43,6 +44,10 @@ export class AtualizarProdutoDto {
   @MaxLength(188)
   @IsOptional()
   marca: string;
+
+  @IsOptional()
+  @IsNumber()
+  preco: number
 
   @IsOptional()
   carrinhoId: number;

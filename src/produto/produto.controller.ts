@@ -24,7 +24,7 @@ export class ProdutoController {
   @Post('criar')
   @UseGuards(AuthGuard('jwt'))
   async criarProduto(@Body() produtoDto: CriarProdutoDto): Promise<Produto> {
-    return this.produtoService.criarProduto(produtoDto)
+    return this.produtoService.criarProduto(produtoDto);
   }
 
   @Post('filtroProduto')
@@ -42,15 +42,22 @@ export class ProdutoController {
   @UseGuards(AuthGuard('jwt'))
   @Put('atualizar/:id')
   @UsePipes(ValidationPipe)
-  atualizarProduto(@Param('id', ParseIntPipe) id: number, @Body() produtoDto:AtualizarUsuarioDto): Promise<Produto> {
-    return this.produtoService.atualizarProduto(id, produtoDto)
+  atualizarProduto(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() produtoDto: AtualizarUsuarioDto,
+  ): Promise<Produto> {
+    return this.produtoService.atualizarProduto(id, produtoDto);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Delete('deletar/:id')
   @UsePipes(ValidationPipe)
   deletarProduto(@Param('id', ParseIntPipe) id: number): Promise<Produto> {
-    return this.produtoService.deletarProduto(id)
+    return this.produtoService.deletarProduto(id);
   }
-  
+
+  @Get('todos')
+  listarCategorias(): Promise<Produto[]> {
+    return this.produtoService.todosProdutos();
+  }
 }

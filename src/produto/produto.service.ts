@@ -109,4 +109,8 @@ export class ProdutoService {
 
     return produtoExcluido;
   }
+
+  async todosProdutos(): Promise<Produto[]>{
+    return this.db.produto.findMany()
+  }
 }

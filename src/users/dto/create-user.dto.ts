@@ -7,7 +7,11 @@ import {
   IsNotEmpty,
   MinLength,
   IsPostalCode,
+  IsArray,
+  Matches,
 } from 'class-validator';
+
+import { Cpf } from '../../common/customtCpf';
 
 export class CreateUserDto {
   @IsOptional()
@@ -21,10 +25,9 @@ export class CreateUserDto {
   })
   name: string;
 
+  @Cpf()
   @IsString()
   @IsNotEmpty({ message: 'Infome o CPF' })
-  @MinLength(11, { message: 'O CPF é composto por 11 numeros' })
-  @MaxLength(11, { message: 'O CPF é composto por 11 numeros' })
   cpf: string;
 
   @IsPostalCode('BR')
@@ -40,8 +43,10 @@ export class CreateUserDto {
   email: string;
 
   @IsString()
-  @IsNotEmpty({ message: 'Informe uma senha' })
-  @MinLength(8, { message: 'A senha deve ter no mínimo 8 carcateres' })
+  @Length(4, 20)
+  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
+    message: 'password too weak',
+  })
   password: string;
 
   // @IsNotEmpty({ message: 'Informe a confirmação de senha' })

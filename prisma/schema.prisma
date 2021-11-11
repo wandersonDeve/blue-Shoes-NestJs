@@ -24,26 +24,26 @@ model User {
 
 model ShoppingCart {
   id Int @id @default(autoincrement())
-  produto Produto[]
+  product Product[]
   User    User?  @relation(fields: [userId], references: [id])
   userId  Int?
 }
 
 model Wishlist {
   id Int @id @default(autoincrement())
-  produto Produto[]
+  product Product[]
   User    User?  @relation(fields: [userId], references: [id])
   userId  Int?
 }
 
-model Produto {
+model Product {
   id Int @id @default(autoincrement())
-  name String
+  name String @unique
+  image String
+  logo String
   price Float
-  quantidade Int
-  color String
-  size Int
-  descricao String
+  storage Storage[]
+  description String
   category Category[]
   shoppingCart    ShoppingCart?  @relation(fields: [shoppingCartId], references: [id])
   shoppingCartId  Int?
@@ -51,8 +51,17 @@ model Produto {
   wishlisttId  Int?
 }
 
+model Storage {
+  id Int @id @default(autoincrement())
+  size Int
+  color String
+  quantity Int
+  product    Product?  @relation(fields: [productId], references: [id])
+  productId  Int?
+}
+
 model Category {
   id Int @id @default(autoincrement())
   name String
-  produto Produto[]
+  product Product[]
 }

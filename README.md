@@ -29,7 +29,7 @@
 ## Installation
 
 ```bash
-$ npm i
+$ npm install
 ```
 
 ## Running the app

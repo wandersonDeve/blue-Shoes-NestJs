@@ -43,9 +43,11 @@ model Storage {
 model Carrinho {
   id          Int       @id @default(autoincrement())
   produto     Produto[]
-  quantidade  Int
-  valor_total Float
+  quantidade  Int?
+  valor_total Float?
   pedido      Pedido?
+  Usuario     Usuario?  @relation(fields: [usuarioId], references: [id])
+  usuarioId   Int?
 }
 
 model Pedido {
@@ -61,11 +63,12 @@ model Pedido {
 }
 
 model Usuario {
-  id        Int      @id @default(autoincrement())
-  nome      String
-  sobrenome String
-  email     String   @unique
-  cpf       String   @unique
-  senha     String
-  pedido    Pedido[]
+  id         Int      @id @default(autoincrement())
+  nome       String
+  sobrenome  String
+  email      String   @unique
+  cpf        String   @unique
+  senha      String
+  pedido     Pedido[]
+  carrinho   Carrinho[]
 }

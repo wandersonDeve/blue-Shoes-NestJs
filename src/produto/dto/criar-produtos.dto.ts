@@ -25,9 +25,6 @@ export class CriarProdutoDto {
   marca: string;
 
   @IsNumber()
-  price: number;
-
-  @IsNumber()
   @IsOptional()
   carrinhoId: number;
 }

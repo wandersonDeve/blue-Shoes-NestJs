@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  UnauthorizedException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Produto, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 
@@ -54,10 +50,6 @@ export class ProdutoService {
 
     if (!userAuth) {
       throw new NotFoundException();
-    }
-
-    if (userAuth.id !== id) {
-      throw new UnauthorizedException();
     }
 
     return this.db.produto.delete({

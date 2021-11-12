@@ -43,10 +43,10 @@ export class ProdutoController {
   @Put('/atualizar/:id')
   @UsePipes(ValidationPipe)
   async update(
-    @Body() updateProduct: CriarProdutoDto,
+    @Body() atualizarProduto: CriarProdutoDto,
     @Param('id', ParseIntPipe) id: number,
   ): Promise<Produto> {
-    return this.produto.update(id, updateProduct);
+    return this.produto.update(id, atualizarProduto);
   }
 
   @UseGuards(AuthGuard('jwt'))

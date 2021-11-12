@@ -12,6 +12,4 @@ export class AuthController {
   login(@Body() data: LoginDto): Promise<AuthResponse> {
     return this.service.login(data);
   }
-
-  
 }

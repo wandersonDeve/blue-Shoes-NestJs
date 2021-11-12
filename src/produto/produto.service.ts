@@ -2,7 +2,6 @@ import {
   Injectable,
   UnauthorizedException,
   NotFoundException,
-  ConflictException,
 } from '@nestjs/common';
 import { Produto, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
@@ -12,14 +11,6 @@ export class ProdutoService {
   constructor(private db: PrismaService) {}
 
   async create(data: Prisma.ProdutoCreateInput): Promise<Produto> {
-    const existing = await this.db.produto.findUnique({
-      where: { name: data.name },
-    });
-
-    if (existing) {
-      throw new ConflictException('Product already exists');
-    }
-
     const produto = await this.db.produto.create({
       data: {
         ...data,

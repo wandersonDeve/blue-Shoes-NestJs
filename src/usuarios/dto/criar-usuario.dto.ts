@@ -12,13 +12,13 @@ import { Cpf } from 'src/common/customCpf';
 
 export class CriarUsuarioDto {
   @IsString()
-  @Length(2, 40)
+  @Length(2, 100)
   @MaxLength(100)
   @IsOptional()
   nome: string;
 
   @IsOptional()
-  @Length(2, 40)
+  @Length(2, 100)
   @MaxLength(100)
   @IsString()
   sobrenome: string;

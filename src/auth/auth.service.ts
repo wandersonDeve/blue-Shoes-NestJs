@@ -29,7 +29,7 @@ export class AuthService {
       throw new UnauthorizedException('invalid_credentials');
     }
 
-    delete usuario.senha
+    delete usuario.senha;
 
     return {
       token: this.jwt.sign({ email }),

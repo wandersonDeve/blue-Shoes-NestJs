@@ -6,7 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { ProdutoModule } from './produto/produto.module';
 
 @Module({
-  imports: [UsuariosModule, AuthModule,ProdutoModule],
+  imports: [UsuariosModule, AuthModule, ProdutoModule],
   controllers: [AppController],
   providers: [AppService],
 })

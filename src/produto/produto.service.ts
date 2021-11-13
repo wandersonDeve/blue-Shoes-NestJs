@@ -56,4 +56,27 @@ export class ProdutoService {
       where: { id },
     });
   }
+
+  async adicionarProduto(
+    produtoId: number,
+    carrinhoId: number,
+  ): Promise<Produto> {
+    await this.db.carrinho.update({
+      where: { id: carrinhoId },
+      data: {
+        produto: {
+          connect: {
+            id: produtoId,
+          },
+        },
+      },
+    });
+
+    return this.db.produto.findUnique({
+      where: { id: produtoId },
+      include: {
+        carrinho: true,
+      },
+    });
+  }
 }

@@ -10,6 +10,7 @@ import {
   ValidationPipe,
   ParseIntPipe,
   UseGuards,
+  Patch,
 } from '@nestjs/common';
 import { CarrinhoService } from './carrinho.service';
 import { CriarCarrinhoDto } from './dto/criar-carrinho.dto';

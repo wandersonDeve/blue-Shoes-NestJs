@@ -16,7 +16,7 @@ export class UsuariosService {
     const buscaEmail = await this.db.usuario.findFirst({
       where: {
         email: data.email,
-      }
+      },
     });
 
     const buscaCpf = await this.db.usuario.findFirst({
@@ -52,8 +52,8 @@ export class UsuariosService {
       },
       include: {
         carrinho: {
-          select: {
-            id: true,
+          include: {
+            produto: true,
           },
         },
       },

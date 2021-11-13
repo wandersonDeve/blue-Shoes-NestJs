@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Carrinho, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 
@@ -21,6 +21,9 @@ export class CarrinhoService {
       where: {
         id: carrinhoId,
       },
+      include: {
+        produto: true,
+      },
     });
   }
 
@@ -37,7 +40,7 @@ export class CarrinhoService {
   }
 
   async deleteOne(id: number): Promise<void> {
-    const produto = await this.db.carrinho.delete({
+    await this.db.carrinho.delete({
       where: { id },
       select: {
         produto: true,

@@ -1,9 +1,11 @@
 import { IsNumber, IsOptional } from 'class-validator';
 
 export class CriarCarrinhoDto {
+  @IsNumber()
   @IsOptional()
   produtoId: number;
 
+  @IsNumber()
   @IsOptional()
   quantidade: number;
 
@@ -11,5 +13,6 @@ export class CriarCarrinhoDto {
   valor_total: number;
 
   @IsNumber()
+  @IsOptional()
   usuarioId: number;
 }

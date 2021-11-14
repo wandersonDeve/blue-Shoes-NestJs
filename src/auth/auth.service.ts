@@ -17,6 +17,13 @@ export class AuthService {
 
     const usuario = await this.db.usuario.findUnique({
       where: { email },
+      include: {
+        carrinho: {
+          select: {
+            id: true,
+          },
+        },
+      },
     });
 
     if (!usuario) {

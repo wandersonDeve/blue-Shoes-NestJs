@@ -44,4 +44,7 @@ export class CriarUsuarioDto {
 
   @IsOptional()
   pedido: Pedido;
+
+  @IsOptional()
+  carrinhoId: number;
 }

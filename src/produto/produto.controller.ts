@@ -10,11 +10,14 @@ import {
   ValidationPipe,
   ParseIntPipe,
   UseGuards,
+  Patch,
 } from '@nestjs/common';
 import { ProdutoService } from './produto.service';
 import { CriarProdutoDto } from './dto/criar-produtos.dto';
-import { Produto } from '.prisma/client';
+import { Carrinho, Produto, Usuario } from '.prisma/client';
 import { AuthGuard } from '@nestjs/passport';
+import AuthUser from 'src/common/auth-user.decorator';
+import { CriarUsuarioDto } from 'src/usuarios/dto/criar-usuario.dto';
 
 @Controller('produto')
 export class ProdutoController {
@@ -32,7 +35,6 @@ export class ProdutoController {
     return this.produto.findAll();
   }
 
-  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @UsePipes(ValidationPipe)
   async findUnique(@Param('id', ParseIntPipe) id: number) {

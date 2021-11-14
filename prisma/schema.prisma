@@ -16,38 +16,13 @@ model Categorias {
   produto Produto[]
 }
 
-model Produto {
-  id                Int         @id @default(autoincrement())
-  nome              String
-  descricao         String
-  Categorias        Categorias? @relation(fields: [categoriasId], references: [id])
-  categoriasId      Int?
-  imagem            String
-  quantidade_vendas Int?
-  logo              String
-  marca             String
-  storage           Storage[]
-  Carrinho          Carrinho?   @relation(fields: [carrinhoId], references: [id])
-  carrinhoId        Int?
-}
-
 model Storage {
   id         Int      @id @default(autoincrement())
   cor        String
   tamanho    Int
   quantidade Int
-  Produto    Produto? @relation(fields: [produtoId], references: [id])
+  produto    Produto? @relation(fields: [produtoId], references: [id])
   produtoId  Int?
-}
-
-model Carrinho {
-  id          Int       @id @default(autoincrement())
-  produto     Produto[]
-  quantidade  Int?
-  valor_total Float?
-  pedido      Pedido?
-  Usuario     Usuario?  @relation(fields: [usuarioId], references: [id])
-  usuarioId   Int?
 }
 
 model Pedido {
@@ -55,7 +30,7 @@ model Pedido {
   valor            Decimal
   cep              String
   endereco_entrega String
-  Boleto           String
+  boleto           String
   carrinho         Carrinho? @relation(fields: [carrinhoId], references: [id])
   carrinhoId       Int?      @unique
   Usuario          Usuario?  @relation(fields: [usuarioId], references: [id])
@@ -69,6 +44,30 @@ model Usuario {
   email      String   @unique
   cpf        String   @unique
   senha      String
+  carrinho   Carrinho?
   pedido     Pedido[]
-  carrinho   Carrinho[]
+}
+
+model Carrinho {
+  id          Int       @id @default(autoincrement())
+  quantidade  Int?
+  valor_total Float?
+  usuario     Usuario?  @relation(fields: [usuarioId], references: [id])
+  usuarioId   Int?
+  produto     Produto[]
+  pedido     Pedido?
+}
+
+model Produto {
+  id                Int         @id @default(autoincrement())
+  nome              String
+  descricao         String
+  imagem            String
+  quantidade_vendas Int?
+  logo              String
+  marca             String
+  carrinho          Carrinho[]
+  storage           Storage[]
+  categorias        Categorias? @relation(fields: [categoriasId], references: [id])
+  categoriasId      Int?
 }

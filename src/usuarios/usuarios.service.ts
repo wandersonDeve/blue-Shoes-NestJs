@@ -1,6 +1,5 @@
 import {
   BadRequestException,
-  ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -17,7 +16,7 @@ export class UsuariosService {
     const buscaEmail = await this.db.usuario.findFirst({
       where: {
         email: data.email,
-      },
+      }
     });
 
     const buscaCpf = await this.db.usuario.findFirst({
@@ -36,6 +35,9 @@ export class UsuariosService {
       data: {
         ...data,
         senha: hashSenha,
+        carrinho: {
+          create: {},
+        },
       },
     });
 
@@ -49,7 +51,7 @@ export class UsuariosService {
         id: usuarioId,
       },
       include: {
-        pedido: {
+        carrinho: {
           select: {
             id: true,
           },

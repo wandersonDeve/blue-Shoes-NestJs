@@ -17,7 +17,7 @@ export class ProdutoService {
     return produto;
   }
 
-  async findAll(): Promise<Produto[]> {
+  async findAll(): Promise<Produto> {
     return this.db.produto.findMany();
   }
 

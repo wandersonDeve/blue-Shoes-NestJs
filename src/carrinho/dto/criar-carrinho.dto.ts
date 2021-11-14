@@ -1,6 +1,10 @@
 import { IsNumber, IsOptional } from 'class-validator';
 
 export class CriarCarrinhoDto {
+  @IsOptional()
+  @IsNumber()
+  id: number;
+
   @IsNumber()
   @IsOptional()
   produtoId: number;

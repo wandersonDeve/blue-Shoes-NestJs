@@ -1,3 +1,4 @@
+import { CriarCarrinhoDto } from 'src/carrinho/dto/criar-carrinho.dto';
 import {
   Controller,
   Get,
@@ -18,6 +19,7 @@ import { Carrinho, Produto, Usuario } from '.prisma/client';
 import { AuthGuard } from '@nestjs/passport';
 import AuthUser from 'src/common/auth-user.decorator';
 import { CriarUsuarioDto } from 'src/usuarios/dto/criar-usuario.dto';
+import { AtualizarProdutoDto } from './dto/Atualizar-produtos.dto';
 
 @Controller('produto')
 export class ProdutoController {
@@ -56,5 +58,15 @@ export class ProdutoController {
   @UsePipes(ValidationPipe)
   async delete(@Param('id') id: number) {
     return this.produto.deleteOne(id);
+  }
+
+  @Patch('adicionar/:id')
+  @UseGuards(AuthGuard('jwt'))
+  adicionarProduto(
+    @Body() carrinho: AtualizarProdutoDto,
+    @Param('id') produtoId: number,
+  ): Promise<Produto> {
+    const carrinhoId = carrinho.carrinhoId;
+    return this.produto.adicionarProduto(produtoId, carrinhoId);
   }
 }

@@ -23,4 +23,7 @@ export class CriarProdutoDto {
 
   @IsString()
   marca: string;
+
+  @IsOptional()
+  carrinhoId: number;
 }

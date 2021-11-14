@@ -33,7 +33,7 @@ export class ProdutoController {
 
   @Get('/todos')
   @UsePipes(ValidationPipe)
-  async findMany(): Promise<Produto[]> {
+  async findMany(): Promise<Produto> {
     return this.produto.findAll();
   }
 

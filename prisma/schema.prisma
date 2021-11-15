@@ -67,6 +67,7 @@ model Produto {
   quantidade_vendas Int?
   logo              String
   marca             String
+  preco             Float
   carrinho          Carrinho[]
   storage           Storage[]
   categorias        Categorias? @relation(fields: [categoriasId], references: [id])

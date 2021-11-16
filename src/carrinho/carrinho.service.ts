@@ -22,7 +22,11 @@ export class CarrinhoService {
         id: carrinhoId,
       },
       include: {
-        produto: true,
+        Item_do_carrinho: {
+          include: {
+            produto: true,
+          },
+        },
       },
     });
   }
@@ -42,9 +46,6 @@ export class CarrinhoService {
   async deleteOne(id: number): Promise<void> {
     await this.db.carrinho.delete({
       where: { id },
-      select: {
-        produto: true,
-      },
     });
   }
 }

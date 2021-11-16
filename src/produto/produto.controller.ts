@@ -53,17 +53,7 @@ export class ProdutoController {
   @UseGuards(AuthGuard('jwt'))
   @Delete('deletar/:id')
   @UsePipes(ValidationPipe)
-  async delete(@Param('id') id: number) {
+  async delete(@Param('id', ParseIntPipe) id: number) {
     return this.produto.deleteOne(id);
-  }
-
-  @Patch('adicionar/:id')
-  @UseGuards(AuthGuard('jwt'))
-  adicionarProduto(
-    @Body() carrinho: AtualizarProdutoDto,
-    @Param('id') produtoId: number,
-  ): Promise<Produto> {
-    const carrinhoId = carrinho.carrinhoId;
-    return this.produto.adicionarProduto(produtoId, carrinhoId);
   }
 }

@@ -39,24 +39,24 @@ model Pedido {
 }
 
 model Usuario {
-  id         Int      @id @default(autoincrement())
-  nome       String
-  sobrenome  String
-  email      String   @unique
-  cpf        String   @unique
-  senha      String
-  carrinho   Carrinho?
-  pedido     Pedido[]
+  id               Int      @id @default(autoincrement())
+  nome             String
+  sobrenome        String
+  email            String   @unique
+  cpf              String   @unique
+  senha            String
+  carrinho         Carrinho?
+  pedido           Pedido[]
 }
 
 model Carrinho {
-  id          Int       @id @default(autoincrement())
-  quantidade  Int?
-  valor_total Float?
-  usuario     Usuario?  @relation(fields: [usuarioId], references: [id])
-  usuarioId   Int?
-  produto     Produto[]
-  pedido     Pedido?
+  id                Int       @id @default(autoincrement())
+  quantidade_itens  Int?
+  valor_total       Float?
+  usuario           Usuario?  @relation(fields: [usuarioId], references: [id])
+  usuarioId         Int?
+  Item_do_carrinho  Item_do_carrinho[]
+  pedido            Pedido?
 }
 
 model Produto {
@@ -68,8 +68,17 @@ model Produto {
   logo              String
   marca             String
   preco             Float
-  carrinho          Carrinho[]
+  Item_do_carrinho  Item_do_carrinho[]
   storage           Storage[]
   categorias        Categorias? @relation(fields: [categoriasId], references: [id])
   categoriasId      Int?
+}
+
+model Item_do_carrinho {
+  id                Int       @id @default(autoincrement())
+  carrinho          Carrinho? @relation(fields: [carrinhoId], references: [id])
+  carrinhoId        Int?
+  produto           Produto?  @relation(fields: [produtoId], references: [id])
+  produtoId         Int?
+  quantidade        Int
 }

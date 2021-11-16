@@ -53,7 +53,11 @@ export class UsuariosService {
       include: {
         carrinho: {
           include: {
-            produto: true,
+            Item_do_carrinho: {
+              include: {
+                produto: true,
+              },
+            },
           },
         },
       },

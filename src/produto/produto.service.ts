@@ -41,42 +41,19 @@ export class ProdutoService {
   }
 
   async deleteOne(id: number): Promise<Produto> {
-    const userAuth = await this.db.produto.findUnique({
+    const produto = await this.db.produto.findUnique({
       where: { id },
       select: {
         id: true,
       },
     });
 
-    if (!userAuth) {
+    if (!produto) {
       throw new NotFoundException();
     }
 
     return this.db.produto.delete({
       where: { id },
-    });
-  }
-
-  async adicionarProduto(
-    produtoId: number,
-    carrinhoId: number,
-  ): Promise<Produto> {
-    await this.db.carrinho.update({
-      where: { id: carrinhoId },
-      data: {
-        produto: {
-          connect: {
-            id: produtoId,
-          },
-        },
-      },
-    });
-
-    return this.db.produto.findUnique({
-      where: { id: produtoId },
-      include: {
-        carrinho: true,
-      },
     });
   }
 }

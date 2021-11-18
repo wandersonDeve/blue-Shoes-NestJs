@@ -24,6 +24,12 @@ export class CarrinhoController {
     return this.carrinho.create(criarCarrinho);
   }
 
+  @Get('/todos')
+  @UsePipes(ValidationPipe)
+  async findMany(): Promise<Carrinho[]> {
+    return this.carrinho.findAll();
+  }
+
   @Get(':id')
   @UsePipes(ValidationPipe)
   async findUnique(@Param('id', ParseIntPipe) id: number) {
@@ -43,11 +49,5 @@ export class CarrinhoController {
   @UsePipes(ValidationPipe)
   async delete(@Param('id') id: number) {
     return this.carrinho.deleteOne(id);
-  }
-
-  @Get('/todos')
-  @UsePipes(ValidationPipe)
-  async findMany(): Promise<Carrinho[]> {
-    return this.carrinho.findAll();
   }
 }

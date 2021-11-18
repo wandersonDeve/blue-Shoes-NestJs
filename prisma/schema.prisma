@@ -54,8 +54,8 @@ model Produto {
   descricao         String
   imagem            String
   quantidade_vendas Int?
-  tamanho           Int
-  cor               String
+  tamanho           Int   @default(40)
+  cor               String @default("Branco")
   logo              String
   marca             String
   preco             Float

@@ -44,6 +44,10 @@ export class UsuariosService {
     return novoUsuario;
   }
 
+  async findAll(): Promise<Usuario[]> {
+    return this.db.usuario.findMany();
+  }
+
   //validar essa rota para que o usuario só possa encontrar ele
   async encontraUm(usuarioId: number): Promise<Usuario> {
     const usuarioEncontrado = await this.db.usuario.findUnique({
@@ -101,9 +105,5 @@ export class UsuariosService {
     }
 
     return this.db.usuario.delete({ where: { id: id } });
-  }
-
-  async findAll(): Promise<Usuario[]> {
-    return this.db.usuario.findMany();
   }
 }

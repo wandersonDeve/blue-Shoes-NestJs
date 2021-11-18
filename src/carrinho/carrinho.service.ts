@@ -16,6 +16,10 @@ export class CarrinhoService {
     return carrinho;
   }
 
+  async findAll(): Promise<Carrinho[]> {
+    return this.db.carrinho.findMany();
+  }
+
   async findOne(carrinhoId: number): Promise<Carrinho> {
     return this.db.carrinho.findUnique({
       where: {
@@ -52,9 +56,5 @@ export class CarrinhoService {
     await this.db.carrinho.delete({
       where: { id },
     });
-  }
-
-  async findAll(): Promise<Carrinho[]> {
-    return this.db.carrinho.findMany();
   }
 }

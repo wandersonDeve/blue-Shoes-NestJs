@@ -10,13 +10,11 @@ import {
   ValidationPipe,
   ParseIntPipe,
   UseGuards,
-  Patch,
 } from '@nestjs/common';
 import { ProdutoService } from './produto.service';
 import { CriarProdutoDto } from './dto/criar-produtos.dto';
 import { Produto } from '.prisma/client';
 import { AuthGuard } from '@nestjs/passport';
-import { AtualizarProdutoDto } from './dto/atualizar-produtos.dto';
 
 @Controller('produto')
 export class ProdutoController {

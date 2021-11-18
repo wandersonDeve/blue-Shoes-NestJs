@@ -26,6 +26,12 @@ export class UsuariosController {
     return this.usuariosService.criar(usuarioDto);
   }
 
+  @Get('/todos')
+  @UsePipes(ValidationPipe)
+  async findMany(): Promise<Usuario[]> {
+    return this.usuariosService.findAll();
+  }
+
   @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @UsePipes(ValidationPipe)
@@ -48,11 +54,5 @@ export class UsuariosController {
   @UsePipes(ValidationPipe)
   deletaum(@Param('id', ParseIntPipe) id: number): Promise<Usuario> {
     return this.usuariosService.deletarUsuario(id);
-  }
-
-  @Get('/todos')
-  @UsePipes(ValidationPipe)
-  async findMany(): Promise<Usuario[]> {
-    return this.usuariosService.findAll();
   }
 }

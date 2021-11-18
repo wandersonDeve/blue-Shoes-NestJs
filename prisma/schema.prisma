@@ -8,6 +8,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  shadowDatabaseUrl     = env("SHADOW_DATABASE_URL")
 }
 
 model Categorias {
@@ -15,16 +16,6 @@ model Categorias {
   nome    String
   produto Produto[]
 }
-
-model Storage {
-  id         Int      @id @default(autoincrement())
-  cor        String
-  tamanho    Int
-  quantidade Int
-  produto    Produto? @relation(fields: [produtoId], references: [id])
-  produtoId  Int?
-}
-
 model Pedido {
   id               Int       @id @default(autoincrement())
   valor            Decimal
@@ -50,7 +41,6 @@ model Usuario {
 
 model Carrinho {
   id                Int       @id @default(autoincrement())
-  quantidade_itens  Int?
   valor_total       Float?
   usuario           Usuario?  @relation(fields: [usuarioId], references: [id])
   usuarioId         Int?
@@ -64,11 +54,12 @@ model Produto {
   descricao         String
   imagem            String
   quantidade_vendas Int?
+  tamanho           Int   @default(40)
+  cor               String @default("Branco")
   logo              String
   marca             String
   preco             Float
   Item_do_carrinho  Item_do_carrinho[]
-  storage           Storage[]
   categorias        Categorias? @relation(fields: [categoriasId], references: [id])
   categoriasId      Int?
 }

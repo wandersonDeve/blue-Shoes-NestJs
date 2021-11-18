@@ -16,14 +16,23 @@ export class CarrinhoService {
     return carrinho;
   }
 
+  async findAll(): Promise<Carrinho[]> {
+    return this.db.carrinho.findMany();
+  }
+
   async findOne(carrinhoId: number): Promise<Carrinho> {
     return this.db.carrinho.findUnique({
       where: {
         id: carrinhoId,
       },
       include: {
+        _count: {
+          select: { Item_do_carrinho: true },
+        },
         Item_do_carrinho: {
-          include: {
+          select: {
+            id: true,
+            quantidade: true,
             produto: true,
           },
         },

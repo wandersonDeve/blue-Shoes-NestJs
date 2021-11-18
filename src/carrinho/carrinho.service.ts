@@ -6,16 +6,6 @@ import { PrismaService } from 'src/prisma.service';
 export class CarrinhoService {
   constructor(private db: PrismaService) {}
 
-  async create(data: Prisma.CarrinhoCreateInput): Promise<Carrinho> {
-    const carrinho = await this.db.carrinho.create({
-      data: {
-        ...data,
-      },
-    });
-
-    return carrinho;
-  }
-
   async findAll(): Promise<Carrinho[]> {
     return this.db.carrinho.findMany();
   }
@@ -40,21 +30,16 @@ export class CarrinhoService {
     });
   }
 
-  async update(
-    carrinhoId: number,
-    data: Prisma.CarrinhoCreateInput,
-  ): Promise<Carrinho> {
+  async update(carrinhoId: number): Promise<Carrinho> {
     return this.db.carrinho.update({
-      data,
       where: {
         id: carrinhoId,
       },
-    });
-  }
-
-  async deleteOne(id: number): Promise<void> {
-    await this.db.carrinho.delete({
-      where: { id },
+      data: {
+        Item_do_carrinho: {
+          deleteMany: {},
+        },
+      },
     });
   }
 }

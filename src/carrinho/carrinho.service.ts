@@ -22,8 +22,13 @@ export class CarrinhoService {
         id: carrinhoId,
       },
       include: {
+        _count: {
+          select: { Item_do_carrinho: true },
+        },
         Item_do_carrinho: {
-          include: {
+          select: {
+            id: true,
+            quantidade: true,
             produto: true,
           },
         },
@@ -47,5 +52,9 @@ export class CarrinhoService {
     await this.db.carrinho.delete({
       where: { id },
     });
+  }
+
+  async findAll(): Promise<Carrinho[]> {
+    return this.db.carrinho.findMany();
   }
 }

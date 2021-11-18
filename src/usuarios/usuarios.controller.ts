@@ -49,4 +49,10 @@ export class UsuariosController {
   deletaum(@Param('id', ParseIntPipe) id: number): Promise<Usuario> {
     return this.usuariosService.deletarUsuario(id);
   }
+
+  @Get('/todos')
+  @UsePipes(ValidationPipe)
+  async findMany(): Promise<Usuario[]> {
+    return this.usuariosService.findAll();
+  }
 }

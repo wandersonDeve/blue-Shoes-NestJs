@@ -44,4 +44,10 @@ export class CarrinhoController {
   async delete(@Param('id') id: number) {
     return this.carrinho.deleteOne(id);
   }
+
+  @Get('/todos')
+  @UsePipes(ValidationPipe)
+  async findMany(): Promise<Carrinho[]> {
+    return this.carrinho.findAll();
+  }
 }

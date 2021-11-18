@@ -36,9 +36,7 @@ export class UsuariosService {
         ...data,
         senha: hashSenha,
         carrinho: {
-          create: {
-            quantidade_itens: 0,
-          },
+          create: {},
         },
       },
     });

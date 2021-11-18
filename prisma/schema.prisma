@@ -44,8 +44,6 @@ model Carrinho {
   valor_total       Float?
   usuario           Usuario?  @relation(fields: [usuarioId], references: [id])
   usuarioId         Int?
-  tamanho           Int?
-  cor               String?
   Item_do_carrinho  Item_do_carrinho[]
   pedido            Pedido?
 }
@@ -56,6 +54,8 @@ model Produto {
   descricao         String
   imagem            String
   quantidade_vendas Int?
+  tamanho           Int
+  cor               String
   logo              String
   marca             String
   preco             Float

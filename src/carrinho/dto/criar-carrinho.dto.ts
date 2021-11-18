@@ -19,10 +19,4 @@ export class CriarCarrinhoDto {
   @IsNumber()
   @IsOptional()
   usuarioId: number;
-
-  @IsNumber()
-  tamanho: number;
-
-  @IsString()
-  cor: string;
 }

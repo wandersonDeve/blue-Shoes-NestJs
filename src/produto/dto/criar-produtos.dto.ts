@@ -31,4 +31,10 @@ export class CriarProdutoDto {
 
   @IsOptional()
   carrinhoId: number;
+
+  @IsNumber()
+  tamanho: number;
+
+  @IsString()
+  cor: string;
 }

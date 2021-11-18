@@ -36,7 +36,9 @@ export class UsuariosService {
         ...data,
         senha: hashSenha,
         carrinho: {
-          create: {},
+          create: {
+            quantidade_itens: 0,
+          },
         },
       },
     });
@@ -101,5 +103,9 @@ export class UsuariosService {
     }
 
     return this.db.usuario.delete({ where: { id: id } });
+  }
+
+  async findAll(): Promise<Usuario[]> {
+    return this.db.usuario.findMany();
   }
 }

@@ -10,11 +10,15 @@ import {
   ValidationPipe,
   ParseIntPipe,
   UseGuards,
+  Patch,
+  Query,
 } from '@nestjs/common';
 import { ProdutoService } from './produto.service';
 import { CriarProdutoDto } from './dto/criar-produtos.dto';
 import { Produto } from '.prisma/client';
 import { AuthGuard } from '@nestjs/passport';
+import { AtualizarProdutoDto } from './dto/atualizar-produtos.dto';
+import { ProcurarProdutosQueryDto } from './dto/procurar-produtos.dto';
 
 @Controller('produto')
 export class ProdutoController {
@@ -30,6 +34,14 @@ export class ProdutoController {
   @UsePipes(ValidationPipe)
   async findMany(): Promise<Produto[]> {
     return this.produto.findAll();
+  }
+
+  @Get()
+  @UsePipes(ValidationPipe)
+  async procurarProdutos(
+    @Query() query: ProcurarProdutosQueryDto,
+  ): Promise<any> {
+    return this.produto.produtoQuery(query);
   }
 
   @Get(':id')

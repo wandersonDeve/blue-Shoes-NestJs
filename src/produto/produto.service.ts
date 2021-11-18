@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Produto, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { CriarProdutoDto } from './dto/criar-produtos.dto';
+import { ProcurarProdutosQueryDto } from './dto/procurar-produtos.dto';
 
 @Injectable()
 export class ProdutoService {
@@ -55,5 +56,22 @@ export class ProdutoService {
     return this.db.produto.delete({
       where: { id },
     });
+  }
+
+  async produtoQuery(queryDto: ProcurarProdutosQueryDto): Promise<any> {
+    const { nome, marca } = queryDto;
+    const produtos = await this.db.produto.findMany({
+      where: {
+        nome: {
+          contains: nome,
+          mode: 'insensitive',
+        },
+        marca: {
+          contains: marca,
+          mode: 'insensitive',
+        },
+      },
+    });
+    return produtos;
   }
 }

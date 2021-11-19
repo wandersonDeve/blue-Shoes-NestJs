@@ -2,7 +2,7 @@ import { CreateItemDoCarrinhoDto } from './dto/create-item-do-carrinho.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { UpdateItemDoCarrinhoDto } from './dto/update-item-do-carrinho.dto';
-import { Carrinho, Item_do_carrinho } from '@prisma/client';
+import { Item_do_carrinho } from '@prisma/client';
 
 @Injectable()
 export class ItemDoCarrinhoService {

@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Produto, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
+import { AtualizarProdutoDto } from './dto/atualizar-produtos.dto';
 import { CriarProdutoDto } from './dto/criar-produtos.dto';
 import { ProcurarProdutosQueryDto } from './dto/procurar-produtos.dto';
 
@@ -38,7 +39,7 @@ export class ProdutoService {
     });
   }
 
-  async update(produtoId: number, dto: CriarProdutoDto) {
+  async update(produtoId: number, dto: AtualizarProdutoDto) {
     const data: Prisma.ProdutoUpdateInput = {
       ...dto,
     };

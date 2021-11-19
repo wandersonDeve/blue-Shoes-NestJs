@@ -54,7 +54,7 @@ export class ProdutoController {
   @Put('/atualizar/:id')
   @UsePipes(ValidationPipe)
   async update(
-    @Body() atualizarProduto: CriarProdutoDto,
+    @Body() atualizarProduto: AtualizarProdutoDto,
     @Param('id', ParseIntPipe) id: number,
   ): Promise<Produto> {
     return this.produto.update(id, atualizarProduto);

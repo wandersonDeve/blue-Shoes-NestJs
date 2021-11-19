@@ -9,6 +9,7 @@ import {
   Matches,
 } from 'class-validator';
 import { Cpf } from 'src/common/customCpf';
+import { UserRole } from '../usuario-roles.enum';
 
 export class CriarUsuarioDto {
   @IsString()
@@ -44,6 +45,9 @@ export class CriarUsuarioDto {
 
   @IsOptional()
   pedido: Pedido;
+
+  @IsOptional()
+  role: UserRole;
 
   @IsOptional()
   carrinhoId: number;

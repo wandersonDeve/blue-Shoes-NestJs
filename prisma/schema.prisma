@@ -35,7 +35,7 @@ model Usuario {
   email            String    @unique
   cpf              String    @unique
   senha            String
-  role             String    @default("user")
+  role             String    
   carrinho         Carrinho?
   pedido           Pedido[]
 }

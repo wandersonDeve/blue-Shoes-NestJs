@@ -47,10 +47,13 @@ export class UsuariosService {
   }
 
   async criarAdmin(data: CriarUsuarioDto, role: UserRole): Promise<Usuario> {
+    const hashSenha = await bcrypt.hash(data.senha, 10);
+
     return this.db.usuario.create({
       data: {
         ...data,
         role: role,
+        senha: hashSenha,
       },
     });
   }

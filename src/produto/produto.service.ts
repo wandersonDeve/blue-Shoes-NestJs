@@ -19,7 +19,15 @@ export class ProdutoService {
   }
 
   async findAll(): Promise<Produto[]> {
-    return this.db.produto.findMany();
+    return this.db.produto.findMany({
+      include: {
+        _count: {
+          select: {
+            Item_do_carrinho: true,
+          },
+        },
+      },
+    });
   }
 
   async findOne(produtoId: number): Promise<Produto> {

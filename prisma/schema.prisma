@@ -35,7 +35,7 @@ model Usuario {
   email            String    @unique
   cpf              String    @unique
   senha            String
-  role             String    
+  role             String    @default("user")  
   carrinho         Carrinho?
   pedido           Pedido[]
 }
@@ -43,7 +43,7 @@ model Usuario {
 model Carrinho {
   id                Int       @id @default(autoincrement())
   valor_total       Float?
-  usuario           Usuario?  @relation(fields: [usuarioId], references: [id])
+  usuario           Usuario?  @relation(fields: [usuarioId], references: [id], onDelete:Cascade, onUpdate:Cascade)
   usuarioId         Int?
   Item_do_carrinho  Item_do_carrinho[]
   pedido            Pedido?
@@ -61,7 +61,7 @@ model Produto {
   marca             String
   preco             Float
   Item_do_carrinho  Item_do_carrinho[]
-  categorias        Categorias? @relation(fields: [categoriasId], references: [id])
+  categorias        Categorias? @relation(fields: [categoriasId], references: [id], onDelete:Cascade, onUpdate:Cascade)
   categoriasId      Int?
 }
 

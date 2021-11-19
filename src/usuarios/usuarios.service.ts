@@ -13,7 +13,7 @@ import { UserRole } from './usuario-roles.enum';
 export class UsuariosService {
   constructor(private db: PrismaService) {}
 
-  async criar(data: CriarUsuarioDto, role: UserRole): Promise<Usuario> {
+  async criarUsuario(data: CriarUsuarioDto): Promise<Usuario> {
     const buscaEmail = await this.db.usuario.findFirst({
       where: {
         email: data.email,
@@ -35,7 +35,7 @@ export class UsuariosService {
     const novoUsuario = await this.db.usuario.create({
       data: {
         ...data,
-        role: role,
+        role: UserRole.USER,
         senha: hashSenha,
         carrinho: {
           create: {},
@@ -46,16 +46,20 @@ export class UsuariosService {
     return novoUsuario;
   }
 
-  async criarAdmin(data: CriarUsuarioDto, role: UserRole): Promise<Usuario> {
+  async criarAdmin(data: CriarUsuarioDto): Promise<Usuario> {
     const hashSenha = await bcrypt.hash(data.senha, 10);
 
-    return this.db.usuario.create({
+    const novoAdm = await this.db.usuario.create({
       data: {
         ...data,
-        role: role,
+        role: UserRole.ADMIN,
         senha: hashSenha,
+        carrinho: {
+          create: {},
+        },
       },
     });
+    return novoAdm;
   }
 
   async findAll(): Promise<Usuario[]> {

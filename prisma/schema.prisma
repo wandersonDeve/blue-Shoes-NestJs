@@ -35,7 +35,7 @@ model Usuario {
   email            String    @unique
   cpf              String    @unique
   senha            String
-  role             String    @default("user")  
+  role             String?
   carrinho         Carrinho?
   pedido           Pedido[]
 }
@@ -55,19 +55,19 @@ model Produto {
   descricao         String
   imagem            String
   quantidade_vendas Int?
-  tamanho           Int        @default(40)
-  cor               String     @default("Branco")
+  tamanho           Int
+  cor               String
   logo              String
   marca             String
   preco             Float
   Item_do_carrinho  Item_do_carrinho[]
-  categorias        Categorias? @relation(fields: [categoriasId], references: [id], onDelete:Cascade, onUpdate:Cascade)
+  categorias        Categorias? @relation(fields: [categoriasId], references: [id])
   categoriasId      Int?
 }
 
 model Item_do_carrinho {
   id                Int         @id @default(autoincrement())
-  carrinho          Carrinho?   @relation(fields: [carrinhoId], references: [id])
+  carrinho          Carrinho?   @relation(fields: [carrinhoId], references: [id],onDelete:Cascade, onUpdate:Cascade)
   carrinhoId        Int?
   produto           Produto?    @relation(fields: [produtoId], references: [id])
   produtoId         Int?

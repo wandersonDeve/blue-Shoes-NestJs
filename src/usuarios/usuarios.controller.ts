@@ -21,22 +21,16 @@ import { UsuariosService } from './usuarios.service';
 export class UsuariosController {
   constructor(private readonly usuariosService: UsuariosService) {}
 
-  @Post('criar')
+  @Post('')
   @UsePipes(ValidationPipe)
-  criarUsuario(
-    @Body() usuarioDto: CriarUsuarioDto,
-    role: UserRole.USER,
-  ): Promise<Usuario> {
-    return this.usuariosService.criar(usuarioDto, role);
+  criarUsuario(@Body() usuarioDto: CriarUsuarioDto): Promise<Usuario> {
+    return this.usuariosService.criarUsuario(usuarioDto);
   }
 
   @Post('adm')
   @UsePipes(ValidationPipe)
-  criarAdmin(
-    @Body() usuarioDto: CriarUsuarioDto,
-    role: UserRole.ADMIN,
-  ): Promise<Usuario> {
-    return this.usuariosService.criarAdmin(usuarioDto, role);
+  criarAdmin(@Body() usuarioDto: CriarUsuarioDto): Promise<Usuario> {
+    return this.usuariosService.criarAdmin(usuarioDto);
   }
 
   @Get('/todos')

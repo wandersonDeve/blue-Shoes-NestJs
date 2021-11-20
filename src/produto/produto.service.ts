@@ -32,7 +32,7 @@ export class ProdutoService {
   }
 
   async findOne(produtoId: number) {
-    const { cor, tamanho, ...produto } = await this.db.produto.findUnique({
+    const { tamanho, ...produto } = await this.db.produto.findUnique({
       where: {
         id: produtoId,
       },

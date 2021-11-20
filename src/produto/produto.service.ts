@@ -22,12 +22,32 @@ export class ProdutoService {
     return this.db.produto.findMany();
   }
 
-  async findOne(produtoId: number): Promise<Produto> {
-    return this.db.produto.findUnique({
+  async findOne(produtoId: number) {
+    const { cor, tamanho, ...produto } = await this.db.produto.findUnique({
       where: {
         id: produtoId,
       },
     });
+
+    const produtos = await this.db.produto.findMany({
+      where: {
+        nome: {
+          contains: produto.nome,
+          mode: 'insensitive',
+        },
+      },
+    });
+
+    const res = {};
+    produtos.map((el) =>
+      !res[el.cor]
+        ? (res[el.cor] = [el.tamanho])
+        : res[el.cor].push(el.tamanho),
+    );
+
+    produto['tamanhos'] = res;
+
+    return produto;
   }
 
   async update(produtoId: number, dto: CriarProdutoDto) {

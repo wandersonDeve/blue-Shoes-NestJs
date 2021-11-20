@@ -7,12 +7,13 @@ import { PrismaService } from 'src/prisma.service';
 import { CriarUsuarioDto } from './dto/criar-usuario.dto';
 import * as bcrypt from 'bcrypt';
 import { Usuario } from '.prisma/client';
+import { UserRole } from './usuario-roles.enum';
 
 @Injectable()
 export class UsuariosService {
   constructor(private db: PrismaService) {}
 
-  async criar(data: CriarUsuarioDto): Promise<Usuario> {
+  async criarUsuario(data: CriarUsuarioDto): Promise<Usuario> {
     const buscaEmail = await this.db.usuario.findFirst({
       where: {
         email: data.email,
@@ -34,6 +35,7 @@ export class UsuariosService {
     const novoUsuario = await this.db.usuario.create({
       data: {
         ...data,
+        role: UserRole.USER,
         senha: hashSenha,
         carrinho: {
           create: {},
@@ -42,6 +44,22 @@ export class UsuariosService {
     });
 
     return novoUsuario;
+  }
+
+  async criarAdmin(data: CriarUsuarioDto): Promise<Usuario> {
+    const hashSenha = await bcrypt.hash(data.senha, 10);
+
+    const novoAdm = await this.db.usuario.create({
+      data: {
+        ...data,
+        role: UserRole.ADMIN,
+        senha: hashSenha,
+        carrinho: {
+          create: {},
+        },
+      },
+    });
+    return novoAdm;
   }
 
   async findAll(): Promise<Usuario[]> {

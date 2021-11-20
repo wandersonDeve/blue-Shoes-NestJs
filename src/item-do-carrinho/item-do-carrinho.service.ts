@@ -8,11 +8,11 @@ import { Item_do_carrinho } from '@prisma/client';
 export class ItemDoCarrinhoService {
   constructor(private db: PrismaService) {}
 
-  async create(data: CreateItemDoCarrinhoDto): Promise<Item_do_carrinho> {
+  async create(data: CreateItemDoCarrinhoDto): Promise<any> {
     const produtoId = data.produtoId;
     const carrinhoId = data.carrinhoId;
 
-    const item = await this.db.item_do_carrinho.create({
+    await this.db.item_do_carrinho.create({
       data: {
         ...data,
         produtoId: produtoId,
@@ -20,7 +20,23 @@ export class ItemDoCarrinhoService {
       },
     });
 
-    return item;
+    return this.db.carrinho.findUnique({
+      where: {
+        id: carrinhoId,
+      },
+      include: {
+        _count: {
+          select: { Item_do_carrinho: true },
+        },
+        Item_do_carrinho: {
+          select: {
+            id: true,
+            produto: true,
+            quantidade: true,
+          },
+        },
+      },
+    });
   }
 
   async findOne(itemId: number): Promise<Item_do_carrinho> {

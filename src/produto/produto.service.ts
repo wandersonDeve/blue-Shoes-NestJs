@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Produto, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
+import { AtualizarProdutoDto } from './dto/atualizar-produtos.dto';
 import { CriarProdutoDto } from './dto/criar-produtos.dto';
 import { ProcurarProdutosQueryDto } from './dto/procurar-produtos.dto';
 
@@ -19,7 +20,15 @@ export class ProdutoService {
   }
 
   async findAll(): Promise<Produto[]> {
-    return this.db.produto.findMany();
+    return this.db.produto.findMany({
+      include: {
+        _count: {
+          select: {
+            Item_do_carrinho: true,
+          },
+        },
+      },
+    });
   }
 
   async findOne(produtoId: number) {
@@ -50,7 +59,7 @@ export class ProdutoService {
     return produto;
   }
 
-  async update(produtoId: number, dto: CriarProdutoDto) {
+  async update(produtoId: number, dto: AtualizarProdutoDto) {
     const data: Prisma.ProdutoUpdateInput = {
       ...dto,
     };

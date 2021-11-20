@@ -14,16 +14,23 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { Usuario } from '@prisma/client';
 import { CriarUsuarioDto } from './dto/criar-usuario.dto';
+import { UserRole } from './usuario-roles.enum';
 import { UsuariosService } from './usuarios.service';
 
 @Controller('usuario')
 export class UsuariosController {
   constructor(private readonly usuariosService: UsuariosService) {}
 
-  @Post('criar')
+  @Post('')
   @UsePipes(ValidationPipe)
-  criar(@Body() usuarioDto: CriarUsuarioDto): Promise<Usuario> {
-    return this.usuariosService.criar(usuarioDto);
+  criarUsuario(@Body() usuarioDto: CriarUsuarioDto): Promise<Usuario> {
+    return this.usuariosService.criarUsuario(usuarioDto);
+  }
+
+  @Post('adm')
+  @UsePipes(ValidationPipe)
+  criarAdmin(@Body() usuarioDto: CriarUsuarioDto): Promise<Usuario> {
+    return this.usuariosService.criarAdmin(usuarioDto);
   }
 
   @Get('/todos')

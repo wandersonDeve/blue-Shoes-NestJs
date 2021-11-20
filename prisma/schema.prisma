@@ -12,9 +12,9 @@ datasource db {
 }
 
 model Categorias {
-  id      Int       @id @default(autoincrement())
-  nome    String
-  produto Produto[]
+  id               Int       @id @default(autoincrement())
+  nome             String
+  produto          Produto[]
 }
 model Pedido {
   id               Int       @id @default(autoincrement())
@@ -29,12 +29,13 @@ model Pedido {
 }
 
 model Usuario {
-  id               Int      @id @default(autoincrement())
+  id               Int       @id @default(autoincrement())
   nome             String
   sobrenome        String
-  email            String   @unique
-  cpf              String   @unique
+  email            String    @unique
+  cpf              String    @unique
   senha            String
+  role             String?
   carrinho         Carrinho?
   pedido           Pedido[]
 }
@@ -42,20 +43,20 @@ model Usuario {
 model Carrinho {
   id                Int       @id @default(autoincrement())
   valor_total       Float?
-  usuario           Usuario?  @relation(fields: [usuarioId], references: [id])
+  usuario           Usuario?  @relation(fields: [usuarioId], references: [id], onDelete:Cascade, onUpdate:Cascade)
   usuarioId         Int?
   Item_do_carrinho  Item_do_carrinho[]
   pedido            Pedido?
 }
 
 model Produto {
-  id                Int         @id @default(autoincrement())
+  id                Int        @id @default(autoincrement())
   nome              String
   descricao         String
   imagem            String
   quantidade_vendas Int?
-  tamanho           Int   @default(40)
-  cor               String @default("Branco")
+  tamanho           Int
+  cor               String
   logo              String
   marca             String
   preco             Float
@@ -65,10 +66,10 @@ model Produto {
 }
 
 model Item_do_carrinho {
-  id                Int       @id @default(autoincrement())
-  carrinho          Carrinho? @relation(fields: [carrinhoId], references: [id])
+  id                Int         @id @default(autoincrement())
+  carrinho          Carrinho?   @relation(fields: [carrinhoId], references: [id],onDelete:Cascade, onUpdate:Cascade)
   carrinhoId        Int?
-  produto           Produto?  @relation(fields: [produtoId], references: [id])
+  produto           Produto?    @relation(fields: [produtoId], references: [id])
   produtoId         Int?
   quantidade        Int
 }

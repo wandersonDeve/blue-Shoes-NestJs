@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { ProdutoModule } from './produto/produto.module';
 import { CarrinhoModule } from './carrinho/carrinho.module';
 import { ItemDoCarrinhoModule } from './item-do-carrinho/item-do-carrinho.module';
+import { PedidosModule } from './pedidos/pedidos.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ItemDoCarrinhoModule } from './item-do-carrinho/item-do-carrinho.module
     ProdutoModule,
     CarrinhoModule,
     ItemDoCarrinhoModule,
+    PedidosModule,
   ],
   controllers: [AppController],
   providers: [AppService],

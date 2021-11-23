@@ -11,7 +11,7 @@ export class UpdateItemDoCarrinhoDto extends PartialType(
 
   @IsOptional()
   @IsNumber()
-  carrinhoId?: number;
+  carrinhoId?: number | null;
 
   @IsOptional()
   @IsNumber()

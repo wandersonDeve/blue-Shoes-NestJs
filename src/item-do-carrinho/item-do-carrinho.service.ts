@@ -58,8 +58,11 @@ export class ItemDoCarrinhoService {
     });
   }
 
-  async remove(id: number): Promise<Item_do_carrinho> {
-    const item = await this.db.produto.findUnique({
+  async remove(
+    id: number,
+    data: UpdateItemDoCarrinhoDto,
+  ): Promise<Item_do_carrinho> {
+    const item = await this.db.item_do_carrinho.findUnique({
       where: { id },
       select: {
         id: true,
@@ -70,8 +73,14 @@ export class ItemDoCarrinhoService {
       throw new NotFoundException();
     }
 
-    return this.db.item_do_carrinho.delete({
-      where: { id },
+    return this.db.item_do_carrinho.update({
+      where: {
+        id: id,
+      },
+      data: {
+        ...data,
+        carrinhoId: null,
+      },
     });
   }
 }

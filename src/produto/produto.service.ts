@@ -108,11 +108,10 @@ export class ProdutoService {
     const produtosGet = items.listaIds;
     const ProdutosRetornados = [];
 
-    for (let i = 1; i < produtosGet.length + 1; i++) {
+    for (let i = 0; i < produtosGet.length; i++) {
       const produtoEncontrado = await this.db.produto.findUnique({
-        where: { id: i },
+        where: { id: produtosGet[i] },
       });
-
       ProdutosRetornados.push(produtoEncontrado);
     }
 

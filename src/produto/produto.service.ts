@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Produto, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { AtualizarProdutoDto } from './dto/atualizar-produtos.dto';
-import { CriarProdutoDto } from './dto/criar-produtos.dto';
 import { ProcurarProdutosQueryDto } from './dto/procurar-produtos.dto';
 
 @Injectable()

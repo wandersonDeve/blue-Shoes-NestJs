@@ -103,4 +103,19 @@ export class ProdutoService {
     });
     return produtos;
   }
+
+  async produtoGetAll(items: any): Promise<any> {
+    const produtosGet = items.listaIds;
+    const ProdutosRetornados = [];
+
+    for (let i = 1; i < produtosGet.length + 1; i++) {
+      const produtoEncontrado = await this.db.produto.findUnique({
+        where: { id: i },
+      });
+
+      ProdutosRetornados.push(produtoEncontrado);
+    }
+
+    return ProdutosRetornados;
+  }
 }

@@ -53,6 +53,12 @@ export class ProdutoController {
     return this.produto.findOne(id);
   }
 
+  @Post('getList')
+  @UsePipes(ValidationPipe)
+  async getList(@Body() listaIds: any): Promise<any> {
+    return this.produto.produtoGetAll(listaIds);
+  }
+
   @UseGuards(AuthGuard('jwt'))
   @Role(UserRole.ADMIN)
   @Put('/atualizar/:id')

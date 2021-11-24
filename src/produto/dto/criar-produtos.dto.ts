@@ -18,12 +18,9 @@ export class CriarProdutoDto {
   @IsOptional()
   quantidade_vendas: number;
 
-  @IsString()
-  logo: string;
-
-  @IsString()
+  @IsNumber()
   @IsNotEmpty()
-  marca: string;
+  marcaId: number;
 
   @IsNumber()
   @IsNotEmpty()

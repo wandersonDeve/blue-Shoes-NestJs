@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Produto, Prisma } from '@prisma/client';
+import { async } from 'rxjs';
 import { PrismaService } from 'src/prisma.service';
 import { AtualizarProdutoDto } from './dto/atualizar-produtos.dto';
 import { CriarProdutoDto } from './dto/criar-produtos.dto';
@@ -108,13 +109,20 @@ export class ProdutoService {
     const produtosGet = items.listaIds;
     const ProdutosRetornados = [];
 
-    for (let i = 0; i < produtosGet.length; i++) {
+
+    for (const i in produtosGet) {
       const produtoEncontrado = await this.db.produto.findUnique({
         where: { id: produtosGet[i] },
       });
-      ProdutosRetornados.push(produtoEncontrado);
+      if (!ProdutosRetornados[produtosGet[i]]) {
+        ProdutosRetornados[produtosGet[i]] = { ...produtoEncontrado };
+        ProdutosRetornados[produtosGet[i]]['quantidade'] = 1;
+      } else {
+        ProdutosRetornados[produtosGet[i]]['quantidade']++;
+      }
     }
+    const retorno = Object.values(ProdutosRetornados);
 
-    return ProdutosRetornados;
+    return retorno;
   }
 }

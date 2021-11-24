@@ -46,9 +46,10 @@ export class UsuariosService {
       },
     });
 
-    delete novoUsuario.confirmationToken
-    delete novoUsuario.recoverToken
-    
+    delete novoUsuario.confirmationToken;
+    delete novoUsuario.recoverToken;
+    delete novoUsuario.senha;
+
     return novoUsuario;
   }
 

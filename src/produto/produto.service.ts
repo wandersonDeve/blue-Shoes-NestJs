@@ -52,6 +52,11 @@ export class ProdutoService {
         },
       },
     });
+
+    if (!produto) {
+      throw new NotFoundException('Produto não encontrado');
+    }
+
     delete produto.tamanho;
     delete produto.marcaId;
 

@@ -62,11 +62,17 @@ export class ItemDoCarrinhoService {
   }
 
   async findOne(itemId: number): Promise<Item_do_carrinho> {
-    return this.db.item_do_carrinho.findUnique({
+    const item = this.db.item_do_carrinho.findUnique({
       where: {
         id: itemId,
       },
     });
+
+    if (!item) {
+      throw new NotFoundException('Item não encontrado');
+    }
+
+    return item;
   }
 
   async update(itemId: number, dto: UpdateItemDoCarrinhoDto) {

@@ -6,9 +6,11 @@ import { jwtConstantes } from './jwt.constants';
 import { PrismaService } from '../prisma.service';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from './jwt.strategy';
+import { MailModule } from 'src/mail/mail.module';
 
 @Module({
   imports: [
+    MailModule,
     PassportModule,
     JwtModule.register({
       secret: jwtConstantes.secret,

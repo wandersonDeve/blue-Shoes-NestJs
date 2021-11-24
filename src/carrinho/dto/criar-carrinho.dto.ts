@@ -1,3 +1,4 @@
+import { Pedidos } from '@prisma/client';
 import { IsNumber, IsOptional } from 'class-validator';
 
 export class CriarCarrinhoDto {
@@ -19,4 +20,7 @@ export class CriarCarrinhoDto {
   @IsNumber()
   @IsOptional()
   usuarioId: number;
+
+  @IsOptional()
+  pedidos: Pedidos;
 }

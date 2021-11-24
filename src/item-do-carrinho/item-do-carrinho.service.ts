@@ -8,19 +8,57 @@ import { Item_do_carrinho } from '@prisma/client';
 export class ItemDoCarrinhoService {
   constructor(private db: PrismaService) {}
 
-  async create(data: CreateItemDoCarrinhoDto): Promise<Item_do_carrinho> {
+  async create(data: CreateItemDoCarrinhoDto): Promise<any> {
     const produtoId = data.produtoId;
     const carrinhoId = data.carrinhoId;
 
-    const item = await this.db.item_do_carrinho.create({
-      data: {
-        ...data,
-        produtoId: produtoId,
+    const item = await this.db.item_do_carrinho.findFirst({
+      where: {
         carrinhoId: carrinhoId,
+        AND: {
+          produtoId: produtoId,
+        },
       },
     });
 
-    return item;
+    if (!item) {
+      await this.db.item_do_carrinho.create({
+        data: {
+          ...data,
+          produtoId: produtoId,
+          carrinhoId: carrinhoId,
+        },
+      });
+    } else {
+      await this.db.item_do_carrinho.update({
+        where: {
+          id: item.id,
+        },
+        data: {
+          quantidade: {
+            increment: data.quantidade,
+          },
+        },
+      });
+    }
+
+    return this.db.carrinho.findUnique({
+      where: {
+        id: carrinhoId,
+      },
+      include: {
+        _count: {
+          select: { Item_do_carrinho: true },
+        },
+        Item_do_carrinho: {
+          select: {
+            id: true,
+            produto: true,
+            quantidade: true,
+          },
+        },
+      },
+    });
   }
 
   async findOne(itemId: number): Promise<Item_do_carrinho> {
@@ -42,8 +80,11 @@ export class ItemDoCarrinhoService {
     });
   }
 
-  async remove(id: number): Promise<Item_do_carrinho> {
-    const item = await this.db.produto.findUnique({
+  async remove(
+    id: number,
+    data: UpdateItemDoCarrinhoDto,
+  ): Promise<Item_do_carrinho> {
+    const item = await this.db.item_do_carrinho.findUnique({
       where: { id },
       select: {
         id: true,
@@ -54,8 +95,14 @@ export class ItemDoCarrinhoService {
       throw new NotFoundException();
     }
 
-    return this.db.item_do_carrinho.delete({
-      where: { id },
+    return this.db.item_do_carrinho.update({
+      where: {
+        id: id,
+      },
+      data: {
+        ...data,
+        carrinhoId: null,
+      },
     });
   }
 }

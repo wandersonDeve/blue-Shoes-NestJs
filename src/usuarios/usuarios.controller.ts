@@ -20,10 +20,22 @@ import { UsuariosService } from './usuarios.service';
 export class UsuariosController {
   constructor(private readonly usuariosService: UsuariosService) {}
 
-  @Post('criar')
+  @Post('')
   @UsePipes(ValidationPipe)
-  criar(@Body() usuarioDto: CriarUsuarioDto): Promise<Usuario> {
-    return this.usuariosService.criar(usuarioDto);
+  criarUsuario(@Body() usuarioDto: CriarUsuarioDto): Promise<Usuario> {
+    return this.usuariosService.criarUsuario(usuarioDto);
+  }
+
+  @Post('adm')
+  @UsePipes(ValidationPipe)
+  criarAdmin(@Body() usuarioDto: CriarUsuarioDto): Promise<Usuario> {
+    return this.usuariosService.criarAdmin(usuarioDto);
+  }
+
+  @Get('/todos')
+  @UsePipes(ValidationPipe)
+  async findMany(): Promise<Usuario[]> {
+    return this.usuariosService.findAll();
   }
 
   @UseGuards(AuthGuard('jwt'))

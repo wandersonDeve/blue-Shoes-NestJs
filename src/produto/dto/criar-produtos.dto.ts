@@ -1,4 +1,4 @@
-import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CriarProdutoDto {
   @IsString()
@@ -18,9 +18,12 @@ export class CriarProdutoDto {
   @IsOptional()
   quantidade_vendas: number;
 
-  @IsNumber()
+  @IsString()
+  logo: string;
+
+  @IsString()
   @IsNotEmpty()
-  marcaId: number;
+  marca: string;
 
   @IsNumber()
   @IsNotEmpty()
@@ -28,10 +31,4 @@ export class CriarProdutoDto {
 
   @IsOptional()
   carrinhoId: number;
-
-  @IsArray()
-  tamanho: number[];
-
-  @IsString()
-  cor: string;
 }

@@ -1,13 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { Carrinho } from '@prisma/client';
+import { Carrinho, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class CarrinhoService {
   constructor(private db: PrismaService) {}
 
-  async findAll(): Promise<Carrinho[]> {
-    return this.db.carrinho.findMany();
+  async create(data: Prisma.CarrinhoCreateInput): Promise<Carrinho> {
+    const carrinho = await this.db.carrinho.create({
+      data: {
+        ...data,
+      },
+    });
+
+    return carrinho;
   }
 
   async findOne(carrinhoId: number): Promise<Carrinho> {
@@ -16,13 +22,8 @@ export class CarrinhoService {
         id: carrinhoId,
       },
       include: {
-        _count: {
-          select: { Item_do_carrinho: true },
-        },
         Item_do_carrinho: {
-          select: {
-            id: true,
-            quantidade: true,
+          include: {
             produto: true,
           },
         },
@@ -30,16 +31,21 @@ export class CarrinhoService {
     });
   }
 
-  async update(carrinhoId: number): Promise<Carrinho> {
+  async update(
+    carrinhoId: number,
+    data: Prisma.CarrinhoCreateInput,
+  ): Promise<Carrinho> {
     return this.db.carrinho.update({
+      data,
       where: {
         id: carrinhoId,
       },
-      data: {
-        Item_do_carrinho: {
-          deleteMany: {},
-        },
-      },
+    });
+  }
+
+  async deleteOne(id: number): Promise<void> {
+    await this.db.carrinho.delete({
+      where: { id },
     });
   }
 }

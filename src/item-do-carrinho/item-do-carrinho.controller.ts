@@ -44,10 +44,7 @@ export class ItemDoCarrinhoController {
 
   @Delete('deletar/:id')
   @UsePipes(ValidationPipe)
-  async remove(
-    @Param('id', ParseIntPipe) id: number,
-    updateItemDoCarrinhoDto: UpdateItemDoCarrinhoDto,
-  ) {
-    return this.itemDoCarrinho.remove(id, updateItemDoCarrinhoDto);
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    return this.itemDoCarrinho.remove(id);
   }
 }

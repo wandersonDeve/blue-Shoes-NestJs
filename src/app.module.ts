@@ -8,9 +8,14 @@ import { ProdutoModule } from './produto/produto.module';
 import { CarrinhoModule } from './carrinho/carrinho.module';
 import { ItemDoCarrinhoModule } from './item-do-carrinho/item-do-carrinho.module';
 import { PedidosModule } from './pedidos/pedidos.module';
+import { MailModule } from './mail/mail.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     MarcaModule,
     UsuariosModule,
     AuthModule,
@@ -18,6 +23,7 @@ import { PedidosModule } from './pedidos/pedidos.module';
     CarrinhoModule,
     ItemDoCarrinhoModule,
     PedidosModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

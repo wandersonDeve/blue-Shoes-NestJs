@@ -12,13 +12,35 @@ export class ItemDoCarrinhoService {
     const produtoId = data.produtoId;
     const carrinhoId = data.carrinhoId;
 
-    await this.db.item_do_carrinho.create({
-      data: {
-        ...data,
-        produtoId: produtoId,
+    const item = await this.db.item_do_carrinho.findFirst({
+      where: {
         carrinhoId: carrinhoId,
+        AND: {
+          produtoId: produtoId,
+        },
       },
     });
+
+    if (!item) {
+      await this.db.item_do_carrinho.create({
+        data: {
+          ...data,
+          produtoId: produtoId,
+          carrinhoId: carrinhoId,
+        },
+      });
+    } else {
+      await this.db.item_do_carrinho.update({
+        where: {
+          id: item.id,
+        },
+        data: {
+          quantidade: {
+            increment: data.quantidade,
+          },
+        },
+      });
+    }
 
     return this.db.carrinho.findUnique({
       where: {
@@ -40,11 +62,17 @@ export class ItemDoCarrinhoService {
   }
 
   async findOne(itemId: number): Promise<Item_do_carrinho> {
-    return this.db.item_do_carrinho.findUnique({
+    const item = this.db.item_do_carrinho.findUnique({
       where: {
         id: itemId,
       },
     });
+
+    if (!item) {
+      throw new NotFoundException('Item não encontrado');
+    }
+
+    return item;
   }
 
   async update(itemId: number, dto: UpdateItemDoCarrinhoDto) {

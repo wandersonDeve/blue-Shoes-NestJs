@@ -1,3 +1,4 @@
+import { MarcaModule } from './marca/marca.module';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -10,6 +11,7 @@ import { PedidosModule } from './pedidos/pedidos.module';
 
 @Module({
   imports: [
+    MarcaModule,
     UsuariosModule,
     AuthModule,
     ProdutoModule,

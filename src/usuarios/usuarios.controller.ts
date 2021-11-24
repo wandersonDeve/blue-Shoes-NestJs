@@ -14,7 +14,6 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { Usuario } from '@prisma/client';
 import { CriarUsuarioDto } from './dto/criar-usuario.dto';
-import { UserRole } from './usuario-roles.enum';
 import { UsuariosService } from './usuarios.service';
 
 @Controller('usuario')

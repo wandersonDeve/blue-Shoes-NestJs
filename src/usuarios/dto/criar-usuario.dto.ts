@@ -50,5 +50,13 @@ export class CriarUsuarioDto {
   role: UserRole;
 
   @IsOptional()
+  @IsString()
+  confirmationToken: string;
+
+  @IsOptional()
+  @IsString()
+  recoverToken: string;
+
+  @IsOptional()
   carrinhoId: number;
 }

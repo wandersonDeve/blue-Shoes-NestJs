@@ -8,10 +8,12 @@ import { CriarUsuarioDto } from './dto/criar-usuario.dto';
 import * as bcrypt from 'bcrypt';
 import { Usuario } from '.prisma/client';
 import { UserRole } from './usuario-roles.enum';
+import { MailerService } from '@nestjs-modules/mailer';
+import * as crypto from 'crypto';
 
 @Injectable()
 export class UsuariosService {
-  constructor(private db: PrismaService) {}
+  constructor(private db: PrismaService, private mailer: MailerService) {}
 
   async criarUsuario(data: CriarUsuarioDto): Promise<Usuario> {
     const buscaEmail = await this.db.usuario.findFirst({
@@ -37,12 +39,12 @@ export class UsuariosService {
         ...data,
         role: UserRole.USER,
         senha: hashSenha,
+        confirmationToken: crypto.randomBytes(32).toString('hex'),
         carrinho: {
           create: {},
         },
       },
     });
-
     return novoUsuario;
   }
 

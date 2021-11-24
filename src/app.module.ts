@@ -1,3 +1,4 @@
+import { MarcaModule } from './marca/marca.module';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -15,6 +16,7 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    MarcaModule,
     UsuariosModule,
     AuthModule,
     ProdutoModule,

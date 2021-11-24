@@ -59,10 +59,10 @@ model Produto {
   descricao         String
   imagem            String
   quantidade_vendas Int?
-  tamanho           Int
+  tamanho           Int[]
   cor               String
-  logo              String
-  marca             String
+  marca             Marca? @relation(fields: [marcaId], references: [id])
+  marcaId           Int?
   preco             Float
   Item_do_carrinho  Item_do_carrinho[]
   categorias        Categorias?        @relation(fields: [categoriasId], references: [id])
@@ -84,4 +84,12 @@ model Pedidos {
   carrinhoId Int?
   endereco   String?
   boleto     String?
+}
+
+model Marca {
+  id              Int @id @default(autoincrement())
+  nome            String
+  logo            String?
+  logo_parceiro   String?
+  produtos        Produto[]
 }

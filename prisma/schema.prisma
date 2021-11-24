@@ -57,7 +57,7 @@ model Produto {
   descricao         String
   imagem            String
   quantidade_vendas Int?
-  tamanho           Int
+  tamanho           Int[]
   cor               String
   marca             Marca? @relation(fields: [marcaId], references: [id])
   marcaId           Int?
@@ -89,5 +89,5 @@ model Marca {
   nome            String
   logo            String?
   logo_parceiro   String?
-  produtos        Produto?
+  produtos        Produto[]
 }

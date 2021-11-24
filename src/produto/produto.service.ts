@@ -109,7 +109,6 @@ export class ProdutoService {
     const produtosGet = items.listaIds;
     const ProdutosRetornados = [];
 
-
     for (const i in produtosGet) {
       const produtoEncontrado = await this.db.produto.findUnique({
         where: { id: produtosGet[i] },

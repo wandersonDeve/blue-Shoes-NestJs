@@ -21,6 +21,13 @@ export class ProdutoService {
   async findAll(): Promise<Produto[]> {
     return this.db.produto.findMany({
       include: {
+        marca: {
+          select: {
+            nome: true,
+            logo: true,
+            logo_parceiro: true,
+          },
+        },
         _count: {
           select: {
             Item_do_carrinho: true,
@@ -35,7 +42,31 @@ export class ProdutoService {
       where: {
         id: produtoId,
       },
+      include: {
+        marca: {
+          select: {
+            nome: true,
+            logo: true,
+            logo_parceiro: true,
+          },
+        },
+      },
     });
+    delete produto.tamanho;
+    delete produto.marcaId;
+
+    const produtos = await this.db.produto.findMany({
+      where: {
+        nome: {
+          contains: produto.nome,
+        },
+      },
+    });
+
+    const res = {};
+    produtos.map((el) => (!res[el.cor] ? (res[el.cor] = el.tamanho) : ''));
+
+    produto['tamanhos'] = res;
 
     return produto;
   }

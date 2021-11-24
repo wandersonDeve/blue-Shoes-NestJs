@@ -2,7 +2,7 @@
   "name": "blueshoes",
   "version": "0.0.1",
   "description": "",
-  "engine": {
+  "engines": {
     "node": "16.x",
     "npm": "8.x"
   },

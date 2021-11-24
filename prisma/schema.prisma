@@ -60,7 +60,7 @@ model Produto {
   tamanho           Int
   cor               String
   marca             Marca? @relation(fields: [marcaId], references: [id])
-  marcaId           Int
+  marcaId           Int?
   preco             Float
   Item_do_carrinho  Item_do_carrinho[]
   categorias        Categorias?        @relation(fields: [categoriasId], references: [id])

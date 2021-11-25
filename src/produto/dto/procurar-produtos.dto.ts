@@ -8,5 +8,8 @@ export class ProcurarProdutosQueryDto {
   marca: string;
 
   @IsOptional()
+  tamanho: string;
+
+  @IsOptional()
   cor: string;
 }

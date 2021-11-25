@@ -52,11 +52,6 @@ export class ProdutoService {
         },
       },
     });
-
-    if (!produto) {
-      throw new NotFoundException('Produto Não Encontrado');
-    }
-
     delete produto.tamanho;
     delete produto.marcaId;
 
@@ -81,16 +76,10 @@ export class ProdutoService {
       ...dto,
     };
 
-    const produto = this.db.produto.update({
+    return this.db.produto.update({
       where: { id: produtoId },
       data,
     });
-
-    if (!produto) {
-      throw new NotFoundException('Produto Não Encontrado');
-    }
-
-    return produto;
   }
 
   async deleteOne(id: number): Promise<Produto> {
@@ -111,8 +100,7 @@ export class ProdutoService {
   }
 
   async produtoQuery(queryDto: ProcurarProdutosQueryDto): Promise<any> {
-    const { nome, marca, cor } = queryDto;
-
+    const { nome, marca, tamanho, cor } = queryDto;
     const produtos = await this.db.produto.findMany({
       where: {
         nome: {
@@ -126,6 +114,9 @@ export class ProdutoService {
               mode: 'insensitive',
             },
           },
+        },
+        tamanho: {
+          equals: Number(tamanho),
         },
         cor: {
           contains: cor,

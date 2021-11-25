@@ -20,6 +20,12 @@ import { UsuariosService } from './usuarios.service';
 export class UsuariosController {
   constructor(private readonly usuariosService: UsuariosService) {}
 
+  @Post('')
+  @UsePipes(ValidationPipe)
+  criarUsuario(@Body() usuarioDto: CriarUsuarioDto): Promise<Usuario> {
+    return this.usuariosService.criarUsuario(usuarioDto);
+  }
+
   @Post('adm')
   @UsePipes(ValidationPipe)
   criarAdmin(@Body() usuarioDto: CriarUsuarioDto): Promise<Usuario> {

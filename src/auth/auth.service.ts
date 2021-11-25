@@ -52,8 +52,6 @@ export class AuthService {
     }
 
     delete usuario.senha;
-    delete usuario.recoverPasswordToken;
-    delete usuario.confirmationToken;
 
     return {
       token: this.jwt.sign({ email }),

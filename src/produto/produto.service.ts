@@ -100,7 +100,8 @@ export class ProdutoService {
   }
 
   async produtoQuery(queryDto: ProcurarProdutosQueryDto): Promise<any> {
-    const { nome, marca, tamanho, cor } = queryDto;
+    const { nome, marca, cor } = queryDto;
+
     const produtos = await this.db.produto.findMany({
       where: {
         nome: {
@@ -114,9 +115,6 @@ export class ProdutoService {
               mode: 'insensitive',
             },
           },
-        },
-        tamanho: {
-          equals: Number(tamanho),
         },
         cor: {
           contains: cor,

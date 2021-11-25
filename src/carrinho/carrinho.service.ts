@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Carrinho } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 
@@ -11,7 +11,7 @@ export class CarrinhoService {
   }
 
   async findOne(carrinhoId: number): Promise<Carrinho> {
-    return this.db.carrinho.findUnique({
+    const carrinho = this.db.carrinho.findUnique({
       where: {
         id: carrinhoId,
       },
@@ -28,10 +28,16 @@ export class CarrinhoService {
         },
       },
     });
+
+    if (!carrinho) {
+      throw new NotFoundException();
+    }
+
+    return carrinho;
   }
 
   async update(carrinhoId: number): Promise<Carrinho> {
-    return this.db.carrinho.update({
+    const carrinho = this.db.carrinho.update({
       where: {
         id: carrinhoId,
       },
@@ -41,5 +47,11 @@ export class CarrinhoService {
         },
       },
     });
+
+    if (!carrinho) {
+      throw new NotFoundException();
+    }
+
+    return carrinho;
   }
 }

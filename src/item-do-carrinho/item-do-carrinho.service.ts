@@ -19,8 +19,7 @@ export class ItemDoCarrinhoService {
         carrinhoId: carrinhoId,
       },
     });
-
-    return this.db.carrinho.findUnique({
+    const carrinho = this.db.carrinho.findUnique({
       where: {
         id: carrinhoId,
       },
@@ -37,25 +36,42 @@ export class ItemDoCarrinhoService {
         },
       },
     });
+
+    if (!carrinho) {
+      throw new NotFoundException();
+    }
+
+    return carrinho;
   }
 
   async findOne(itemId: number): Promise<Item_do_carrinho> {
-    return this.db.item_do_carrinho.findUnique({
+    const item = this.db.item_do_carrinho.findUnique({
       where: {
         id: itemId,
       },
     });
+
+    if (!item) {
+      throw new NotFoundException();
+    }
+
+    return item;
   }
 
   async update(itemId: number, dto: UpdateItemDoCarrinhoDto) {
     const data: UpdateItemDoCarrinhoDto = {
       ...dto,
     };
-
-    return this.db.item_do_carrinho.update({
+    const carrinho = this.db.item_do_carrinho.update({
       where: { id: itemId },
       data,
     });
+
+    if (!carrinho) {
+      throw new NotFoundException();
+    }
+
+    return carrinho;
   }
 
   async remove(

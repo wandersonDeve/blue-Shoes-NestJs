@@ -30,7 +30,7 @@ export class ProdutoService {
         },
         _count: {
           select: {
-            Item_do_carrinho: true,
+            item_do_carrinho: true,
           },
         },
       },

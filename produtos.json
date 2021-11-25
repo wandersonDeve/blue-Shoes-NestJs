@@ -1,91 +1,82 @@
 {
-    "nome":"Downshifte",
+    "nome":"Tenis Downshifte 11 Masculino",
     "imagem": "https://static.netshoes.com.br/produtos/tenis-nike-downshifter-11-masculino/26/HZM-5208-026/HZM-5208-026_zoom2.jpg",
-    "marcaId":1,
+    "logo":"https://static.netshoes.com.br/banners/l_netshoes/2018-12-07/3107_Banner1-Nike.png",
+    "marca":"Nike",
     "descricao": "Caminhada, Corrida",
-    "preco":329.99,
-    "cor":"Branco",
-    "tamanho":[39,40,41,42,43]
+    "preco":329.99
 }
 
 {
-    "nome":"Asics Gel Shogun",
+    "nome":"Tênis Asics Gel Shogun 3 Feminino",
     "imagem": "https://static.netshoes.com.br/produtos/tenis-asics-gel-shogun-3-feminino/80/2FV-8339-480/2FV-8339-480_zoom2.jpg",
-    "marcaId":2 ,
+    "logo":"https://static.netshoes.com.br/banners/l_netshoes/2018-12-07/2593_Banner4-Asics.png",
+    "marca":"Asics",
     "descricao": "Corrida - Caminhada",
-    "preco": 379.90,
-    "cor":"Branco",
-    "tamanho":[39,40,41,42,43]
+    "preco": 379.90
 }
 
 {
-    "nome":"Asics Gel Equation",
+    "nome":"Tênis Asics Gel Equation 10 Feminino",
     "imagem": "https://static.netshoes.com.br/produtos/tenis-asics-gel-equation-10-feminino/84/D18-5543-384/D18-5543-384_zoom1.jpg",
-    "marcaId":2 ,
+    "logo":"https://static.netshoes.com.br/banners/l_netshoes/2018-12-07/2593_Banner4-Asics.png",
+    "marca":"Asics",
     "descricao": " Corrida, Caminhada",
-    "preco":379.99,
-    "cor":"Branco",
-    "tamanho":[39,40,41,42,43]
+    "preco":379.99
 }
 
 {
-    "nome":"Oakley Stratus",
+    "nome":"Tênis Oakley Stratus Masculino",
     "imagem": "https://static.netshoes.com.br/produtos/tenis-oakley-stratus-masculino/06/PFN-1494-006/PFN-1494-006_zoom1.jpg",
-    "marcaId":3 ,
+    "logo":"https://static.netshoes.com.br/banners/l_netshoes/2018-12-07/2985_Banner3-Oakley.png",
+    "marca":"Oakley",
     "descricao": "Esporte",
-    "preco":559.99,
-    "cor":"Branco",
-    "tamanho":[39,40,41,42,43]
+    "preco":559.99
 }
 
 {
-    "nome":"Olympikus Dynamic",
+    "nome":"Tênis Olympikus Dynamic Feminino",
     "imagem": "https://static.netshoes.com.br/produtos/tenis-olympikus-dynamic-feminino/44/D22-0713-244/D22-0713-244_zoom1.jpg",
-    "marcaId":4 ,
+    "logo":"https://static.netshoes.com.br/banners/l_netshoes/2019-04-16/313_Banner5-Olympikus.png",
+    "marca":"Olympikus",
     "descricao": "Caminhada",
-    "preco":249.90,
-    "cor":"Branco",
-    "tamanho":[39,40,41,42,43]
+    "preco":249.90
 }
 
 {
-    "nome":"Adidas Runfalcon",
+    "nome":"Tênis Adidas Runfalcon 2.0 Feminino",
     "imagem": "https://static.netshoes.com.br/produtos/tenis-adidas-runfalcon-20-feminino/06/NQQ-6922-006/NQQ-6922-006_zoom1.jpg",
+    "logo":"https://static.netshoes.com.br/banners/l_netshoes/2018-12-07/3264_Banner6-Adidas.png",
+    "marca":"Adidas",
     "descricao": "Caminhada, Corrida",
-    "preco":299.99,
-    "cor":"Branco",
-    "marcaId":5 ,
-    "tamanho":[39,40,41,42,43]
+    "preco":299.99
 }
 
 {
-    "nome":"Mizuno Way",
+    "nome":"Tênis Mizuno Way Masculino",
     "imagem": "https://static.netshoes.com.br/produtos/tenis-mizuno-way-masculino-marinho-e-azul/88/2FU-5750-088/2FU-5750-088_zoom1.jpg",
+    "logo":"https://static.netshoes.com.br/banners/l_netshoes/2018-12-07/7906_Banner2-Mizuno.png",
+    "marca":"Mizuno",
     "descricao": "Dia a Dia",
-    "preco":349.90,
-    "cor":"Branco",
-    "marcaId":6 ,
-    "tamanho":[39,40,41,42,43]
+    "preco":349.90
 }
 
 {
-    "nome":"Olympikus Corre1 Eco",
+    "nome":"Tênis Olympikus Corre1 Eco Unissex",
     "imagem": "https://static.netshoes.com.br/produtos/tenis-olympikus-corre1-eco-unissex/10/2I2-3125-010/2I2-3125-010_zoom1.jpg",
+    "logo":"https://static.netshoes.com.br/banners/l_netshoes/2019-04-16/313_Banner5-Olympikus.png",
+    "marca":"Olympikus",
     "descricao": "Dia a Dia",
-    "preco":499.90,
-    "cor":"Branco",
-    "marcaId":4 ,
-    "tamanho":[39,40,41,42,43]
+    "preco":499.90
 }
 
 {
-    "nome":"Mizuno Falcon",
+    "nome":"Tênis Mizuno Falcon 2 Masculino",
     "imagem": "https://static.netshoes.com.br/produtos/tenis-mizuno-falcon-2-masculino/32/D16-2774-132/D16-2774-132_zoom5.jpg",
+    "logo":"https://static.netshoes.com.br/banners/l_netshoes/2018-12-07/7906_Banner2-Mizuno.png",
+    "marca":"Mizuno",
     "descricao": "Corrida",
-    "preco":299.99,
-    "cor":"Branco",
-    "marcaId":6 ,
-    "tamanho":[39,40,41,42,43]
+    "preco":299.99
 }
 
 {

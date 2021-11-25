@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,10 +8,37 @@ datasource db {
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
+model Carrinho {
+  id               Int                @id @default(autoincrement())
+  valor_total      Float?
+  usuarioId        Int?               @unique
+  usuario          Usuario?           @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  item_do_carrinho Item_do_carrinho[]
+  pedido           Pedido?
+  pedidos          Pedidos[]
+}
+
 model Categorias {
   id      Int       @id @default(autoincrement())
   nome    String
   produto Produto[]
+}
+
+model Item_do_carrinho {
+  id         Int       @id @default(autoincrement())
+  carrinhoId Int?
+  produtoId  Int?
+  quantidade Int
+  carrinho   Carrinho? @relation(fields: [carrinhoId], references: [id])
+  produto    Produto?  @relation(fields: [produtoId], references: [id])
+}
+
+model Marca {
+  id            Int       @id @default(autoincrement())
+  nome          String
+  logo          String?
+  logo_parceiro String?
+  produto       Produto[]
 }
 
 model Pedido {
@@ -23,34 +47,18 @@ model Pedido {
   cep              String
   endereco_entrega String
   boleto           String
-  carrinho         Carrinho? @relation(fields: [carrinhoId], references: [id])
   carrinhoId       Int?      @unique
-  Usuario          Usuario?  @relation(fields: [usuarioId], references: [id])
   usuarioId        Int?
+  carrinho         Carrinho? @relation(fields: [carrinhoId], references: [id])
+  usuario          Usuario?  @relation(fields: [usuarioId], references: [id])
 }
 
-model Usuario {
-  id                   Int       @id @default(autoincrement())
-  nome                 String
-  sobrenome            String
-  email                String    @unique
-  cpf                  String    @unique
-  senha                String
-  role                 String?
-  confirmationToken    String?
-  recoveryPasswordToken String?
-  carrinho             Carrinho?
-  pedido               Pedido[]
-}
-
-model Carrinho {
-  id               Int                @id @default(autoincrement())
-  valor_total      Float?
-  usuario          Usuario?           @relation(fields: [usuarioId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  usuarioId        Int?               @unique
-  Item_do_carrinho Item_do_carrinho[]
-  pedido           Pedido?
-  Pedidos          Pedidos[]
+model Pedidos {
+  id         Int       @id @default(autoincrement())
+  carrinhoId Int?
+  endereco   String?
+  boleto     String?
+  carrinho   Carrinho? @relation(fields: [carrinhoId], references: [id])
 }
 
 model Produto {
@@ -59,37 +67,26 @@ model Produto {
   descricao         String
   imagem            String
   quantidade_vendas Int?
-  tamanho           Int[]
-  cor               String
-  marca             Marca? @relation(fields: [marcaId], references: [id])
-  marcaId           Int?
   preco             Float
-  Item_do_carrinho  Item_do_carrinho[]
-  categorias        Categorias?        @relation(fields: [categoriasId], references: [id])
   categoriasId      Int?
+  cor               String
+  marcaId           Int?
+  tamanho           Int[]
+  categorias        Categorias?        @relation(fields: [categoriasId], references: [id])
+  marca             Marca?             @relation(fields: [marcaId], references: [id])
+  item_do_carrinho  Item_do_carrinho[]
 }
 
-model Item_do_carrinho {
-  id         Int       @id @default(autoincrement())
-  carrinho   Carrinho? @relation(fields: [carrinhoId], references: [id])
-  carrinhoId Int?
-  produto    Produto?  @relation(fields: [produtoId], references: [id])
-  produtoId  Int?
-  quantidade Int
-}
-
-model Pedidos {
-  id         Int       @id @default(autoincrement())
-  carrinho   Carrinho? @relation(fields: [carrinhoId], references: [id])
-  carrinhoId Int?
-  endereco   String?
-  boleto     String?
-}
-
-model Marca {
-  id              Int @id @default(autoincrement())
-  nome            String
-  logo            String?
-  logo_parceiro   String?
-  produtos        Produto[]
+model Usuario {
+  id                    Int       @id @default(autoincrement())
+  nome                  String
+  sobrenome             String
+  email                 String    @unique
+  cpf                   String    @unique
+  senha                 String
+  role                  String?
+  confirmationToken     String?
+  recoveryPasswordToken String?
+  carrinho              Carrinho?
+  pedido                Pedido[]
 }

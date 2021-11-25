@@ -17,9 +17,9 @@ export class CarrinhoService {
       },
       include: {
         _count: {
-          select: { Item_do_carrinho: true },
+          select: { item_do_carrinho: true },
         },
-        Item_do_carrinho: {
+        item_do_carrinho: {
           select: {
             id: true,
             quantidade: true,
@@ -36,7 +36,7 @@ export class CarrinhoService {
         id: carrinhoId,
       },
       data: {
-        Item_do_carrinho: {
+        item_do_carrinho: {
           deleteMany: {},
         },
       },

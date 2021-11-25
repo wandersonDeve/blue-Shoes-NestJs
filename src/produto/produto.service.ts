@@ -52,6 +52,11 @@ export class ProdutoService {
         },
       },
     });
+
+    if (!produto) {
+      throw new NotFoundException('Produto Não Encontrado');
+    }
+
     delete produto.tamanho;
     delete produto.marcaId;
 
@@ -76,10 +81,16 @@ export class ProdutoService {
       ...dto,
     };
 
-    return this.db.produto.update({
+    const produto = this.db.produto.update({
       where: { id: produtoId },
       data,
     });
+
+    if (!produto) {
+      throw new NotFoundException('Produto Não Encontrado');
+    }
+
+    return produto;
   }
 
   async deleteOne(id: number): Promise<Produto> {

@@ -30,15 +30,17 @@ model Pedido {
 }
 
 model Usuario {
-  id        Int       @id @default(autoincrement())
-  nome      String
-  sobrenome String
-  email     String    @unique
-  cpf       String    @unique
-  senha     String
-  role      String?
-  carrinho  Carrinho?
-  pedido    Pedido[]
+  id                   Int       @id @default(autoincrement())
+  nome                 String
+  sobrenome            String
+  email                String    @unique
+  cpf                  String    @unique
+  senha                String
+  role                 String?
+  confirmationToken    String?
+  recoverPasswordToken String?
+  carrinho             Carrinho?
+  pedido               Pedido[]
 }
 
 model Carrinho {

@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CriarUsuarioDto } from './dto/criar-usuario.dto';
 import * as bcrypt from 'bcrypt';
@@ -12,39 +8,6 @@ import { UserRole } from './usuario-roles.enum';
 @Injectable()
 export class UsuariosService {
   constructor(private db: PrismaService) {}
-
-  async criarUsuario(data: CriarUsuarioDto): Promise<Usuario> {
-    const buscaEmail = await this.db.usuario.findFirst({
-      where: {
-        email: data.email,
-      },
-    });
-
-    const buscaCpf = await this.db.usuario.findFirst({
-      where: {
-        cpf: data.cpf,
-      },
-    });
-
-    if (buscaEmail != null || buscaCpf != null) {
-      throw new BadRequestException('email ou Cpf já Cadastrado');
-    }
-
-    const hashSenha = await bcrypt.hash(data.senha, 10);
-
-    const novoUsuario = await this.db.usuario.create({
-      data: {
-        ...data,
-        role: UserRole.USER,
-        senha: hashSenha,
-        carrinho: {
-          create: {},
-        },
-      },
-    });
-
-    return novoUsuario;
-  }
 
   async criarAdmin(data: CriarUsuarioDto): Promise<Usuario> {
     const hashSenha = await bcrypt.hash(data.senha, 10);

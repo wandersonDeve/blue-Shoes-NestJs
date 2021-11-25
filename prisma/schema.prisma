@@ -38,7 +38,7 @@ model Usuario {
   senha                String
   role                 String?
   confirmationToken    String?
-  recoverPasswordToken String?
+  recoveryPasswordToken String?
   carrinho             Carrinho?
   pedido               Pedido[]
 }

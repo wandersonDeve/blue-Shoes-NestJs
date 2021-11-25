@@ -52,7 +52,7 @@ export class AuthService {
     }
 
     delete usuario.senha;
-    delete usuario.recoverPasswordToken;
+    delete usuario.recoveryPasswordToken;
     delete usuario.confirmationToken;
 
     return {

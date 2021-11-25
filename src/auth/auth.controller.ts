@@ -15,7 +15,7 @@ import { AuthQueryDto } from './dto/auth.query.dto';
 export class AuthController {
   constructor(private service: AuthService) {}
 
-  @Post('/cadastrar')
+  @Post('/signup')
   async signUp(
     @Body(ValidationPipe) usuario: CriarUsuarioDto,
   ): Promise<{ message: string }> {

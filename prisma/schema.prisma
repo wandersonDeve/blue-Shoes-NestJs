@@ -36,6 +36,7 @@ model Usuario {
   email     String    @unique
   cpf       String    @unique
   senha     String
+  confirmacaoSenha String?
   role      String?
   confirmationToken String?
   recoveryPasswordToken String?

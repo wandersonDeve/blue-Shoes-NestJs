@@ -9,10 +9,11 @@ import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../prisma.service';
 import { AuthResponse, LoginDto } from './dto/auth.dto';
 import * as bcrypt from 'bcrypt';
-import * as crypto from 'crypto';
 import { UserRole } from 'src/usuarios/usuario-roles.enum';
 import { AuthQueryDto } from './dto/auth.query.dto';
 import { MailService } from 'src/mail/mail.service';
+import { randomBytes } from 'crypto';
+import { ChangePasswordDto } from './dto/recoverypassword.dto';
 
 @Injectable()
 export class AuthService {
@@ -86,7 +87,7 @@ export class AuthService {
         ...data,
         role: UserRole.USER,
         senha: hashSenha,
-        confirmationToken: crypto.randomBytes(32).toString('hex'),
+        confirmationToken: randomBytes(32).toString('hex'),
         carrinho: {
           create: {},
         },
@@ -114,6 +115,67 @@ export class AuthService {
       },
       data: {
         confirmationToken: null,
+      },
+    });
+  }
+
+  async enviarNovaSenhaEmail(email: string): Promise<void> {
+    const user = await this.db.usuario.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    if (!user) throw new NotFoundException('Usuário não encontrado');
+
+    user.recoveryPasswordToken = randomBytes(32).toString('hex');
+
+    await this.db.usuario.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        ...user,
+      },
+    });
+
+    await this.mail.sendPasswordConfirmation(user.recoveryPasswordToken, email);
+  }
+
+  async novaSenha(
+    query: AuthQueryDto,
+    changePasswordDto: ChangePasswordDto,
+  ): Promise<void> {
+    const { token, email } = query;
+    const { senha, confirmacaoSenha } = changePasswordDto;
+
+    const user = await this.db.usuario.findFirst({
+      where: {
+        email: email,
+        AND: {
+          recoveryPasswordToken: token,
+        },
+      },
+    });
+
+    if (!user) {
+      throw new NotFoundException('Token invalido');
+    }
+
+    if (senha != confirmacaoSenha) {
+      throw new NotFoundException('As senhas não coincidem');
+    }
+
+    const hashSenha = await bcrypt.hash(senha, 10);
+
+    await this.db.usuario.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        ...user,
+        recoveryPasswordToken: null,
+        senha: hashSenha,
       },
     });
   }

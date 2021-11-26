@@ -10,9 +10,9 @@ import { PrismaService } from '../prisma.service';
 import { AuthResponse, LoginDto } from './dto/auth.dto';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
-import { MailService } from './../mail/mail.service';
 import { UserRole } from 'src/usuarios/usuario-roles.enum';
 import { AuthQueryDto } from './dto/auth.query.dto';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class AuthService {
@@ -47,7 +47,7 @@ export class AuthService {
     }
 
     if (usuario.confirmationToken != null) {
-      await this.mail.sendUserConfirmation(usuario, usuario.confirmationToken);
+      await this.mail.send(usuario.confirmationToken, email, usuario.nome);
       throw new UnauthorizedException('Confirme seu email');
     }
 
@@ -62,6 +62,7 @@ export class AuthService {
   }
 
   async signUp(data: CriarUsuarioDto) {
+    const { confirmationToken, email, nome } = data;
     const buscaEmail = await this.db.usuario.findFirst({
       where: {
         email: data.email,
@@ -80,7 +81,7 @@ export class AuthService {
 
     const hashSenha = await bcrypt.hash(data.senha, 10);
 
-    const novoUsuario = await this.db.usuario.create({
+    await this.db.usuario.create({
       data: {
         ...data,
         role: UserRole.USER,
@@ -92,10 +93,7 @@ export class AuthService {
       },
     });
 
-    await this.mail.sendUserConfirmation(
-      novoUsuario,
-      novoUsuario.confirmationToken,
-    );
+    await this.mail.send(confirmationToken, email, nome);
   }
 
   async confirmEmail(queryDto: AuthQueryDto): Promise<any> {

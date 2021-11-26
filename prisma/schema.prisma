@@ -6,47 +6,90 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
-model User {
-  id Int @id @default(autoincrement())
-  created DateTime @default(now())
-  displayName String @unique
-  email String @unique
-  password String
-  wishlist Wishlist[]
-  shoppingCart ShoppingCart[]
-}
-
-model ShoppingCart {
-  id Int @id @default(autoincrement())
+model Categorias {
+  id      Int       @id @default(autoincrement())
+  nome    String
   produto Produto[]
-  User    User?  @relation(fields: [userId], references: [id])
-  userId  Int?
 }
 
-model Wishlist {
-  id Int @id @default(autoincrement())
-  produto Produto[]
-  User    User?  @relation(fields: [userId], references: [id])
-  userId  Int?
+model Pedido {
+  id               Int       @id @default(autoincrement())
+  valor            Decimal
+  cep              String
+  endereco_entrega String
+  boleto           String
+  carrinho         Carrinho? @relation(fields: [carrinhoId], references: [id])
+  carrinhoId       Int?      @unique
+  Usuario          Usuario?  @relation(fields: [usuarioId], references: [id])
+  usuarioId        Int?
+}
+
+model Usuario {
+  id        Int       @id @default(autoincrement())
+  nome      String
+  sobrenome String
+  email     String    @unique
+  cpf       String    @unique
+  senha     String
+  role      String?
+  confirmationToken String?
+  recoveryPasswordToken String?
+  carrinho  Carrinho?
+  pedido    Pedido[]
+}
+
+model Carrinho {
+  id               Int                @id @default(autoincrement())
+  valor_total      Float?
+  usuario          Usuario?           @relation(fields: [usuarioId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  usuarioId        Int?               @unique
+  Item_do_carrinho Item_do_carrinho[]
+  pedido           Pedido?
+  Pedidos          Pedidos[]
 }
 
 model Produto {
-  id Int @id @default(autoincrement())
-  name String
-  price Float
-  category Category[]
-  shoppingCart    ShoppingCart?  @relation(fields: [shoppingCartId], references: [id])
-  shoppingCartId  Int?
-  wishlist    Wishlist?  @relation(fields: [wishlisttId], references: [id])
-  wishlisttId  Int?
+  id                Int                @id @default(autoincrement())
+  nome              String
+  descricao         String
+  imagem            String
+  quantidade_vendas Int?
+  tamanho           Int[]
+  cor               String
+  marca             Marca? @relation(fields: [marcaId], references: [id])
+  marcaId           Int?
+  preco             Float
+  Item_do_carrinho  Item_do_carrinho[]
+  categorias        Categorias?        @relation(fields: [categoriasId], references: [id])
+  categoriasId      Int?
 }
 
-model Category {
-  id Int @id @default(autoincrement())
-  name String
-  produto Produto[]
+model Item_do_carrinho {
+  id         Int       @id @default(autoincrement())
+  carrinho   Carrinho? @relation(fields: [carrinhoId], references: [id])
+  carrinhoId Int?
+  produto    Produto?  @relation(fields: [produtoId], references: [id])
+  produtoId  Int?
+  quantidade Int
+}
+
+model Pedidos {
+  id         Int       @id @default(autoincrement())
+  carrinho   Carrinho? @relation(fields: [carrinhoId], references: [id])
+  carrinhoId Int?
+  endereco   String?
+  boleto     String?
+}
+
+model Marca {
+  id              Int @id @default(autoincrement())
+  nome            String
+  logo            String?
+  logo_parceiro   String?
+  produtos        Produto[]
 }

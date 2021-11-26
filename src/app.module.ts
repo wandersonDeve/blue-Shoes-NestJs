@@ -8,6 +8,7 @@ import { ProdutoModule } from './produto/produto.module';
 import { CarrinhoModule } from './carrinho/carrinho.module';
 import { ItemDoCarrinhoModule } from './item-do-carrinho/item-do-carrinho.module';
 import { PedidosModule } from './pedidos/pedidos.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { PedidosModule } from './pedidos/pedidos.module';
     CarrinhoModule,
     ItemDoCarrinhoModule,
     PedidosModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

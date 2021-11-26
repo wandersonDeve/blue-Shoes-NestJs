@@ -37,6 +37,8 @@ model Usuario {
   cpf       String    @unique
   senha     String
   role      String?
+  confirmationToken String?
+  recoveryPasswordToken String?
   carrinho  Carrinho?
   pedido    Pedido[]
 }

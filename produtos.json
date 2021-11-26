@@ -1,4 +1,41 @@
 {
+    "id": 1,
+    "nome": "Nike",
+    "logo": "https://static.netshoes.com.br/banners/l_netshoes/2018-12-07/3107_Banner1-Nike.png",
+    "logo_parceiro": "https://static.netshoes.com.br/banners/l_netshoes/2018-12-07/3107_Banner1-Nike.png"
+  },
+  {
+    "id": 2,
+    "nome": "Asics",
+    "logo": "https://static.netshoes.com.br/banners/l_netshoes/2018-12-07/2593_Banner4-Asics.png",
+    "logo_parceiro": "https://static.netshoes.com.br/banners/l_netshoes/2018-12-07/2593_Banner4-Asics.png"
+  },
+  {
+    "id": 3,
+    "nome": "Oakley",
+    "logo": "https://static.netshoes.com.br/banners/l_netshoes/2018-12-07/2985_Banner3-Oakley.png",
+    "logo_parceiro": "https://static.netshoes.com.br/banners/l_netshoes/2018-12-07/2985_Banner3-Oakley.png"
+  },
+  {
+    "id": 4,
+    "nome": "Olympikus",
+    "logo": "https://static.netshoes.com.br/banners/l_netshoes/2019-04-16/313_Banner5-Olympikus.png",
+    "logo_parceiro": "https://static.netshoes.com.br/banners/l_netshoes/2019-04-16/313_Banner5-Olympikus.png"
+  },
+  {
+    "id": 6,
+    "nome": "Mizuno",
+    "logo": "https://static.netshoes.com.br/banners/l_netshoes/2018-12-07/7906_Banner2-Mizuno.png",
+    "logo_parceiro": "https://static.netshoes.com.br/banners/l_netshoes/2018-12-07/7906_Banner2-Mizuno.png"
+  },
+  {
+    "id": 5,
+    "nome": "Adidas",
+    "logo": "https://static.netshoes.com.br/banners/l_netshoes/2018-12-07/3264_Banner6-Adidas.png",
+    "logo_parceiro": "https://static.netshoes.com.br/banners/l_netshoes/2018-12-07/3264_Banner6-Adidas.png"
+  }
+
+  {
     "nome":"Tenis Downshifte 11 Masculino",
     "imagem": "https://static.netshoes.com.br/produtos/tenis-nike-downshifter-11-masculino/26/HZM-5208-026/HZM-5208-026_zoom2.jpg",
     "marcaId":1,
